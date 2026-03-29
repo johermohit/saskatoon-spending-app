@@ -30,7 +30,6 @@ app.innerHTML = `
               <p><span>Neighborhoods</span><strong id="stat-neighborhoods">-</strong></p>
               <p><span>Total Spend</span><strong id="stat-total">-</strong></p>
             </div>
-            <p class="hero-note">High-contrast map mode is locked for optimal accessibility and legibility.</p>
           </aside>
 
           <aside class="map-tools" aria-label="Map controls">
@@ -47,6 +46,14 @@ app.innerHTML = `
               <label><input type="checkbox" id="filter-medium" checked /> $100k-$500k</label>
               <label><input type="checkbox" id="filter-large" checked /> $500k+</label>
             </section>
+
+            <section class="control-group compact">
+              <h2>Legend</h2>
+              <div class="legend-row"><span class="swatch low"></span><span>$20k-$100k</span></div>
+              <div class="legend-row"><span class="swatch med"></span><span>$100k-$500k</span></div>
+              <div class="legend-row"><span class="swatch high"></span><span>$500k-$2.5M</span></div>
+              <div class="legend-row"><span class="swatch max"></span><span>$2.5M+</span></div>
+            </section>
           </aside>
         </aside>
 
@@ -56,13 +63,6 @@ app.innerHTML = `
             <h2 id="drawer-name">Select a neighborhood</h2>
             <p id="drawer-meta">Open a marker to see contracts, vendors, and reason context.</p>
           </div>
-          <section class="panel-legend">
-            <h3>Legend</h3>
-            <div class="legend-row"><span class="swatch low"></span><span>$20k-$100k</span></div>
-            <div class="legend-row"><span class="swatch med"></span><span>$100k-$500k</span></div>
-            <div class="legend-row"><span class="swatch high"></span><span>$500k-$2.5M</span></div>
-            <div class="legend-row"><span class="swatch max"></span><span>$2.5M+</span></div>
-          </section>
           <div id="drawer-projects" class="project-list"></div>
         </aside>
       </section>
@@ -722,6 +722,7 @@ function applyMapTheme(themeKey) {
 
 function renderAnalytics(analytics, reasonCatalog) {
   const root = document.querySelector("#analytics-root");
+  const totalSpend = analytics.totals.Total_Spend || 1;
   const signals = analytics.signals || {
     unknownReasonContracts: 0,
     unknownReasonSpend: 0,
@@ -744,8 +745,6 @@ function renderAnalytics(analytics, reasonCatalog) {
     `${formatCurrency(signals.clerkNameVarianceSpend)} is currently grouped under clerk-related department naming variants.`,
   ];
 
-  const maxDept = Math.max(...analytics.byDepartment.map((item) => item.Total_Spend), 1);
-  const maxReason = Math.max(...analytics.byReason.map((item) => item.Total_Spend), 1);
   const yearRowsSource = Array.isArray(analytics.byYear) ? analytics.byYear : [];
   const maxYearSpend = Math.max(...yearRowsSource.map((item) => item.Total_Spend), 1);
 
@@ -763,28 +762,40 @@ function renderAnalytics(analytics, reasonCatalog) {
     { Year: null, Total_Spend: 0, Contract_Count: 0 }
   );
 
-  const deptRows = analytics.byDepartment.slice(0, 8).map(
-    (item) => `
-      <div class="bar-row">
-        <div class="bar-label">${escapeHtml(item.Department)}</div>
-        <div class="bar-track"><span class="bar-fill" style="width:${(item.Total_Spend / maxDept) * 100}%"></span></div>
-        <div class="bar-value">${formatCurrency(item.Total_Spend)}</div>
-      </div>
+  const deptCards = analytics.byDepartment.slice(0, 9).map(
+    (item, index) => `
+      <article class="insight-card">
+        <span class="insight-rank">#${index + 1}</span>
+        <h3>${escapeHtml(item.Department)}</h3>
+        <p>${formatCurrency(item.Total_Spend)}</p>
+        <small>${item.Contract_Count.toLocaleString("en-CA")} contracts · ${((item.Total_Spend / totalSpend) * 100).toFixed(1)}% share</small>
+      </article>
     `
   ).join("");
 
-  const reasonRows = analytics.byReason.slice(0, 8).map(
+  const reasonMosaic = analytics.byReason.slice(0, 10).map(
     (item) => `
-      <div class="bar-row">
-        <div class="bar-label reason-label-wrap">
-          <strong>${escapeHtml(item.Reason_Code)}</strong>
-          <span>${escapeHtml(getReasonLabel(item.Reason_Code, reasonCatalog))}</span>
-        </div>
-        <div class="bar-track"><span class="bar-fill muted" style="width:${(item.Total_Spend / maxReason) * 100}%"></span></div>
-        <div class="bar-value">${formatCurrency(item.Total_Spend)}</div>
-      </div>
+      <article class="reason-chip">
+        <h3>${escapeHtml(item.Reason_Code)}</h3>
+        <p>${escapeHtml(getReasonLabel(item.Reason_Code, reasonCatalog))}</p>
+        <strong>${formatCurrency(item.Total_Spend)}</strong>
+      </article>
     `
   ).join("");
+
+  const topVendor = analytics.topVendors?.[0];
+  const secondVendor = analytics.topVendors?.[1];
+
+  const fieldNotes = [
+    `${analytics.totals.Contracts.toLocaleString("en-CA")} non-standard records are included in this view.`,
+    topVendor
+      ? `${escapeHtml(topVendor.Vendor)} is the largest single vendor at ${formatCurrency(topVendor.Total_Spend)}.`
+      : "Top-vendor insight unavailable.",
+    secondVendor
+      ? `Second place is ${escapeHtml(secondVendor.Vendor)} at ${formatCurrency(secondVendor.Total_Spend)}.`
+      : "Second-vendor insight unavailable.",
+    `The data spans ${firstYear || "-"} to ${lastYear || "-"}, with peak spend in ${peakYear.Year || "-"}.`,
+  ];
 
   const yearlyRows = yearRowsSource.map(
     (item) => `
@@ -824,6 +835,13 @@ function renderAnalytics(analytics, reasonCatalog) {
       </ul>
     </section>
 
+    <section class="analytics-card">
+      <h2>Field Notes from ${analytics.totals.Contracts.toLocaleString("en-CA")} Records</h2>
+      <ul class="signal-bullets">
+        ${fieldNotes.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </section>
+
     <section class="analytics-card context-grid">
       <article class="context-card">
         <h2>Time Span</h2>
@@ -849,23 +867,15 @@ function renderAnalytics(analytics, reasonCatalog) {
     </section>
 
     <section class="analytics-card">
-      <h2>Where Money Concentrates</h2>
-      <p class="section-copy">Top departments by total non-standard spend.</p>
-      ${deptRows}
+      <h2>Department Footprint</h2>
+      <p class="section-copy">A ranked snapshot of where non-standard spend clusters.</p>
+      <div class="insight-grid">${deptCards}</div>
     </section>
 
-    <section class="analytics-card two-col">
-      <div>
-        <h2>Why Exceptions Were Used</h2>
-        <p class="section-copy">Reason codes translated to plain labels when available from source policy text.</p>
-        ${reasonRows}
-      </div>
-      <div>
-        <h2>ACAN Share</h2>
-        <p class="section-copy">Advance Contract Award Notice flag usage.</p>
-        <p class="acan-row"><span>Yes</span><strong>${analytics.acan.Yes_Count.toLocaleString("en-CA")}</strong><span>${formatCurrency(analytics.acan.Yes_Spend)}</span></p>
-        <p class="acan-row"><span>No</span><strong>${analytics.acan.No_Count.toLocaleString("en-CA")}</strong><span>${formatCurrency(analytics.acan.No_Spend)}</span></p>
-      </div>
+    <section class="analytics-card">
+      <h2>Why Exceptions Were Used</h2>
+      <p class="section-copy">Codes and plain-language reasons with total spend intensity.</p>
+      <div class="reason-mosaic">${reasonMosaic}</div>
     </section>
 
     <section class="analytics-card">

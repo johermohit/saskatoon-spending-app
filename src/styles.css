@@ -328,22 +328,6 @@ body,
   margin: 0.55rem 0 0;
 }
 
-.panel-legend {
-  margin-top: 0.8rem;
-  padding: 0.7rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.panel-legend h3 {
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.62rem;
-  color: var(--muted);
-  font-family: "Space Grotesk", "Segoe UI", sans-serif;
-}
-
 .project-list {
   margin-top: 0.95rem;
   display: grid;
@@ -444,6 +428,74 @@ body,
 
 .signal-bullets li + li {
   margin-top: 0.35rem;
+}
+
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 0.65rem;
+}
+
+.insight-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 0.7rem;
+}
+
+.insight-rank {
+  font-size: 0.66rem;
+  color: var(--muted);
+  letter-spacing: 0.11em;
+}
+
+.insight-card h3 {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+}
+
+.insight-card p {
+  margin: 0.25rem 0 0;
+  font-size: 1rem;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.insight-card small {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.73rem;
+  color: var(--ink-soft);
+}
+
+.reason-mosaic {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.reason-chip {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.65rem;
+}
+
+.reason-chip h3 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 0.85rem;
+}
+
+.reason-chip p {
+  margin: 0.3rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.79rem;
+}
+
+.reason-chip strong {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--ink);
+  font-size: 0.9rem;
 }
 
 .section-copy {
@@ -696,6 +748,11 @@ body,
   }
 
   .context-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .insight-grid,
+  .reason-mosaic {
     grid-template-columns: 1fr;
   }
 
