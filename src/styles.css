@@ -1,0 +1,136 @@
+:root {
+  --bg: #081018;
+  --bg-soft: #111f2f;
+  --ink: #f2f6ff;
+  --ink-muted: #b7c5dc;
+  --accent: #ff9d2f;
+  --accent-soft: #ffd8a3;
+  --card: #14263a;
+  --line: rgba(196, 220, 255, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  background: radial-gradient(80% 120% at 20% -20%, #1f3552 0%, var(--bg) 56%);
+  color: var(--ink);
+  font-family: "Manrope", "Segoe UI", sans-serif;
+}
+
+.layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+}
+
+.panel {
+  padding: 1.5rem;
+  background: linear-gradient(180deg, rgba(18, 34, 52, 0.94) 0%, rgba(11, 24, 38, 0.96) 100%);
+  border-right: 1px solid var(--line);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+.eyebrow {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-soft);
+  margin-bottom: 0.65rem;
+}
+
+h1 {
+  margin: 0;
+  line-height: 1.1;
+  font-size: clamp(1.5rem, 1.35rem + 0.8vw, 2.15rem);
+}
+
+.lead {
+  color: var(--ink-muted);
+  margin-top: 0.95rem;
+  line-height: 1.5;
+}
+
+.stats {
+  margin-top: 1.4rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.stat {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.85rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+}
+
+.label {
+  display: block;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+.stat strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.01em;
+}
+
+.hint {
+  margin-top: 1rem;
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+}
+
+.map-wrap {
+  position: relative;
+  min-height: 100vh;
+}
+
+#map {
+  position: absolute;
+  inset: 0;
+}
+
+.popup h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1rem;
+}
+
+.popup p {
+  margin: 0.25rem 0;
+  font-size: 0.88rem;
+}
+
+.error {
+  margin-top: 1rem;
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 117, 93, 0.5);
+  background: rgba(129, 23, 12, 0.3);
+  color: #ffd2ca;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .map-wrap {
+    min-height: 58vh;
+  }
+}
