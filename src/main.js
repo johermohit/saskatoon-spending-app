@@ -47,9 +47,26 @@ const formatCurrency = (value) =>
 
 const map = new maplibregl.Map({
   container: "map",
-  style: "https://demotiles.maplibre.org/style.json",
+  style: {
+    version: 8,
+    sources: {
+      osm: {
+        type: "raster",
+        tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+        tileSize: 256,
+        attribution: "&copy; OpenStreetMap contributors",
+      },
+    },
+    layers: [
+      {
+        id: "osm",
+        type: "raster",
+        source: "osm",
+      },
+    ],
+  },
   center: [-106.6702, 52.1332],
-  zoom: 12,
+  zoom: 11,
   pitch: 0,
   bearing: 0,
   antialias: true,
@@ -138,7 +155,7 @@ map.on("load", async () => {
           5000000,
           28,
         ],
-        "circle-opacity": 0.15,
+        "circle-opacity": 0.25,
         "circle-blur": 0.5,
       },
     });
