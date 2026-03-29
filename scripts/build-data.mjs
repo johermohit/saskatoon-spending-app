@@ -6,6 +6,8 @@ const dataSummaryPath = path.join(rootDir, "data", "summary.json");
 const csvPath = path.join(rootDir, "data", "Non-Standard.csv");
 const publicSummaryPath = path.join(rootDir, "public", "data", "summary.json");
 const analyticsPath = path.join(rootDir, "public", "data", "analytics.json");
+const arcgisEndpoint =
+  "https://services8.arcgis.com/Btd0M0xLx9Q5uIYf/arcgis/rest/services/non_standard_procurement_data/FeatureServer/0/query";
 
 function toNumber(value) {
   const parsed = Number(String(value ?? "").replace(/,/g, "").trim());
@@ -125,26 +127,118 @@ function aggregateBy(items, keySelector, amountSelector) {
   return [...map.values()];
 }
 
+async function fileExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function readJsonOr(filePath, fallbackValue) {
+  try {
+    const text = await fs.readFile(filePath, "utf8");
+    return JSON.parse(text);
+  } catch {
+    return fallbackValue;
+  }
+}
+
+function normalizeProject(project) {
+  return {
+    Vendor: normalizeText(project.vendor ?? project.Vendor),
+    Amount: toNumber(project.amount ?? project.Amount),
+    Description: normalizeText(project.description ?? project.Description, "Not provided"),
+    Policy_Reason: normalizeText(project.policy_reason ?? project.Policy_Reason, "Not provided"),
+  };
+}
+
+function normalizeProcurementRecord(raw) {
+  const amount = toNumber(raw.AMOUNT ?? raw.amount);
+  const reasonRaw = normalizeText(raw.REASON ?? raw.reason, "Unspecified");
+  const reasonCodes = parseReasonCodes(reasonRaw);
+  const yearValue = Number(raw.Year ?? raw.year);
+  const acanRaw = String(raw.ACAN ?? raw.acan ?? "").trim().toLowerCase();
+
+  return {
+    department: normalizeText(raw.DEPARTMENT ?? raw.department),
+    vendor: normalizeText(raw.VENDOR ?? raw.vendor),
+    description: normalizeText(raw.DESCRIPTION ?? raw.description, "Not provided"),
+    contractNumber: normalizeText(raw.CONTRACT_NUMBER ?? raw.contract_number),
+    year: Number.isFinite(yearValue) ? yearValue : null,
+    amount,
+    reasonRaw,
+    reasonCodes,
+    acan: acanRaw === "yes" || acanRaw === "y" || acanRaw === "true" || acanRaw === "1",
+    fid: Number(raw.FID ?? raw.fid) || null,
+  };
+}
+
+async function loadProcurementRows() {
+  if (await fileExists(csvPath)) {
+    const csvText = await fs.readFile(csvPath, "utf8");
+    return parseCsv(csvText);
+  }
+
+  const params = new URLSearchParams({
+    where: "1=1",
+    outFields: "FID,Year,DEPARTMENT,VENDOR,DESCRIPTION,CONTRACT_NUMBER,AMOUNT,REASON,ACAN",
+    returnGeometry: "false",
+    f: "json",
+  });
+
+  const response = await fetch(`${arcgisEndpoint}?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error(`ArcGIS fallback request failed: ${response.status} ${response.statusText}`);
+  }
+
+  const payload = await response.json();
+  const features = Array.isArray(payload.features) ? payload.features : [];
+  if (features.length === 0) {
+    throw new Error("ArcGIS fallback returned no records.");
+  }
+
+  console.warn("CSV source missing; using ArcGIS API fallback to build analytics.");
+  return features.map((feature) => feature.attributes || {}).filter(Boolean);
+}
+
 async function buildSummary() {
-  const [enrichedText, currentPublicText] = await Promise.all([
-    fs.readFile(dataSummaryPath, "utf8"),
-    fs.readFile(publicSummaryPath, "utf8").catch(() => "[]"),
+  const [enrichedRows, currentPublicRows] = await Promise.all([
+    readJsonOr(dataSummaryPath, []),
+    readJsonOr(publicSummaryPath, []),
   ]);
 
-  const enrichedRows = JSON.parse(enrichedText);
-  const currentPublicRows = JSON.parse(currentPublicText);
+  const hasEnrichedRows = Array.isArray(enrichedRows) && enrichedRows.length > 0;
+  const hasPublicRows = Array.isArray(currentPublicRows) && currentPublicRows.length > 0;
+
+  if (!hasEnrichedRows && !hasPublicRows) {
+    throw new Error("No summary source data found in data/summary.json or public/data/summary.json.");
+  }
+
+  if (!hasEnrichedRows && hasPublicRows) {
+    console.warn("data/summary.json missing; preserving existing public/data/summary.json.");
+    await fs.writeFile(publicSummaryPath, `${JSON.stringify(currentPublicRows, null, 2)}\n`, "utf8");
+
+    return {
+      neighborhoods: currentPublicRows.length,
+      projects: currentPublicRows.reduce(
+        (sum, row) => sum + (Number(row.Project_Count) || (Array.isArray(row.Projects) ? row.Projects.length : 0)),
+        0
+      ),
+      spend: currentPublicRows.reduce((sum, row) => sum + toNumber(row.Total_Spend), 0),
+    };
+  }
+
   const currentMap = keyByNeighborhood(currentPublicRows);
 
   const built = enrichedRows.map((row) => {
     const neighborhood = normalizeText(row.neighborhood || row.Neighborhood);
     const legacy = currentMap.get(neighborhood) || {};
     const projects = Array.isArray(row.projects)
-      ? row.projects.map((project) => ({
-          Vendor: normalizeText(project.vendor),
-          Amount: toNumber(project.amount),
-          Description: normalizeText(project.description, "Not provided"),
-          Policy_Reason: normalizeText(project.policy_reason, "Not provided"),
-        }))
+      ? row.projects.map(normalizeProject)
+      : Array.isArray(row.Projects)
+        ? row.Projects.map(normalizeProject)
       : [];
 
     return {
@@ -175,27 +269,8 @@ async function buildSummary() {
 }
 
 async function buildAnalytics() {
-  const csvText = await fs.readFile(csvPath, "utf8");
-  const csvRows = parseCsv(csvText);
-
-  const records = csvRows.map((row) => {
-    const amount = toNumber(row.AMOUNT);
-    const reasonCodes = parseReasonCodes(row.REASON);
-    const year = Number(row.Year);
-
-    return {
-      department: normalizeText(row.DEPARTMENT),
-      vendor: normalizeText(row.VENDOR),
-      description: normalizeText(row.DESCRIPTION, "Not provided"),
-      contractNumber: normalizeText(row.CONTRACT_NUMBER),
-      year: Number.isFinite(year) ? year : null,
-      amount,
-      reasonRaw: normalizeText(row.REASON, "Unspecified"),
-      reasonCodes,
-      acan: String(row.ACAN ?? "").trim().toLowerCase() === "yes",
-      fid: Number(row.FID) || null,
-    };
-  });
+  const rows = await loadProcurementRows();
+  const records = rows.map(normalizeProcurementRecord);
 
   const validRecords = records.filter((record) => record.amount > 0);
   const years = validRecords.map((record) => record.year).filter((year) => Number.isFinite(year));
