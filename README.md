@@ -2,13 +2,13 @@
 
 Interactive civic spending application with three views:
 - Neighborhoods (map with project provenance drilldown)
-- Allocation Intelligence (contract analytics)
+- Spending Signals (contract analytics with year trends and reason context)
 - Philosophy (method and mission narrative)
 
 ## What Is Included
 - Vite web app setup for local development and production builds.
 - MapLibre neighborhood map with click-to-audit details panel.
-- Analytics view powered by CSV-derived datasets (with optional live API fallback).
+- Analytics view powered by CSV-derived datasets (with optional live API fallback), including year-by-year spend patterns and readable reason labels.
 - Build-time data pipeline that outputs runtime artifacts under `public/data/`.
 
 ## Project Structure

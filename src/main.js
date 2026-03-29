@@ -10,7 +10,7 @@ app.innerHTML = `
       <div class="brand">Saskatoon Spending Story</div>
       <nav class="topnav" aria-label="Primary">
         <button class="nav-btn is-active" data-view="neighborhoods">Neighborhoods</button>
-        <button class="nav-btn" data-view="allocation">Allocation Intelligence</button>
+        <button class="nav-btn" data-view="allocation">Spending Signals</button>
         <button class="nav-btn" data-view="philosophy">Philosophy</button>
       </nav>
     </header>
@@ -20,8 +20,8 @@ app.innerHTML = `
         <p class="eyebrow">Civic Monolith</p>
         <h1 class="title">Neighborhood Allocation Atlas</h1>
         <p class="lead">
-          Click any neighborhood marker to inspect where the total comes from, down to
-          vendor, contract detail, and policy reason.
+          Track where procurement dollars land, then open a neighborhood to see vendor,
+          contract intent, and policy reason in plain language.
         </p>
 
         <div class="stats-grid">
@@ -47,6 +47,15 @@ app.innerHTML = `
         </section>
 
         <section class="control-group">
+          <h2>Map Theme</h2>
+          <select id="map-theme">
+            <option value="civic-night">Civic Night</option>
+            <option value="paper-light">Paper Light</option>
+            <option value="high-contrast">High Contrast</option>
+          </select>
+        </section>
+
+        <section class="control-group">
           <h2>Spend Bands</h2>
           <label><input type="checkbox" id="filter-small" checked /> $20k-$100k</label>
           <label><input type="checkbox" id="filter-medium" checked /> $100k-$500k</label>
@@ -68,7 +77,7 @@ app.innerHTML = `
           <div class="panel-header">
             <p class="eyebrow">Neighborhood Audit</p>
             <h2 id="drawer-name">Select a neighborhood</h2>
-            <p id="drawer-meta">Project-level provenance will appear here.</p>
+            <p id="drawer-meta">Open a marker to see contracts, vendors, and reason context.</p>
           </div>
           <div id="drawer-projects" class="project-list"></div>
         </aside>
@@ -77,9 +86,12 @@ app.innerHTML = `
 
     <section class="view" data-view="allocation">
       <section class="analytics-shell" id="analytics-root">
-        <p class="eyebrow">Procurement Intelligence</p>
-        <h1 class="title">Allocation Intelligence</h1>
-        <p class="lead">Contract-level analytics from Non-Standard procurement records.</p>
+        <p class="eyebrow">Procurement Signal Desk</p>
+        <h1 class="title">Spending Signals</h1>
+        <p class="lead">
+          A time-aware read of procurement: where spending concentrated, why exceptions were used,
+          and what that means for public accountability.
+        </p>
       </section>
     </section>
 
@@ -130,6 +142,59 @@ const state = {
   rows: [],
   analytics: null,
   analyticsRendered: false,
+  reasonCatalog: {},
+  activeTheme: "civic-night",
+};
+
+const MAP_THEMES = {
+  "civic-night": {
+    raster: {
+      "raster-saturation": -0.7,
+      "raster-contrast": 0.2,
+      "raster-brightness-min": 0.1,
+      "raster-brightness-max": 0.78,
+    },
+    glow: "#f4b112",
+    stops: ["#b8d88c", "#f6be3b", "#f59245", "#ee6b5f"],
+    stroke: "#1f2630",
+  },
+  "paper-light": {
+    raster: {
+      "raster-saturation": -0.25,
+      "raster-contrast": 0.03,
+      "raster-brightness-min": 0.52,
+      "raster-brightness-max": 1,
+    },
+    glow: "#b67f08",
+    stops: ["#7ea06a", "#ce8d15", "#bf5f2a", "#a63e32"],
+    stroke: "#f7f2e7",
+  },
+  "high-contrast": {
+    raster: {
+      "raster-saturation": -1,
+      "raster-contrast": 0.52,
+      "raster-brightness-min": 0.08,
+      "raster-brightness-max": 0.72,
+    },
+    glow: "#ffd84f",
+    stops: ["#7ee081", "#ffd84f", "#ff7a4f", "#ff4f5a"],
+    stroke: "#0d0e10",
+  },
+};
+
+const REASON_BASE_LABELS = {
+  A: "No compliant bids or submissions",
+  B: "Insurance or risk placement",
+  C: "Emergency procurement",
+  D: "Compatibility or standardization",
+  E: "Single/sole source conditions",
+  F: "Contract continuation or extension",
+  G: "Specialized professional services",
+  H: "Strategic or partnership-based services",
+  I: "Regulatory, legal, or rights constraints",
+  J: "Community, social, or environmental programs",
+  K: "Other approved policy exception",
+  Unspecified: "Reason not specified in source data",
 };
 
 const drawerName = document.querySelector("#drawer-name");
@@ -151,6 +216,60 @@ function normalizeRow(row) {
     Coordinates: Array.isArray(row.Coordinates) ? row.Coordinates : row.coordinates,
     Projects: projects,
   };
+}
+
+function normalizeReasonCode(token) {
+  const text = String(token || "").toUpperCase();
+  const letterMatch = text.match(/[A-Z]/);
+  if (!letterMatch) return null;
+  const letter = letterMatch[0];
+  const digitMatch = text.match(/[0-9]/);
+  return digitMatch ? `${letter}${digitMatch[0]}` : letter;
+}
+
+function extractReasonCodeFromPolicyText(policyReason) {
+  const text = String(policyReason || "");
+  const parentheses = text.match(/\(([A-Z][A-Z0-9\s/&,-]*)\)/i);
+  if (parentheses?.[1]) {
+    const normalized = normalizeReasonCode(parentheses[1]);
+    if (normalized) return normalized;
+  }
+
+  const trailingCode = text.match(/\b([A-Z]\s*[0-9]?)\b/i);
+  if (trailingCode?.[1]) {
+    return normalizeReasonCode(trailingCode[1]);
+  }
+
+  return null;
+}
+
+function cleanPolicyLabel(policyReason) {
+  const text = String(policyReason || "").trim();
+  if (!text) return null;
+
+  return text
+    .replace(/\s*\([A-Z][A-Z0-9\s/&,-]*\)\s*$/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function buildReasonCatalogFromNeighborhoods(rows) {
+  const catalog = { ...REASON_BASE_LABELS };
+
+  rows.forEach((row) => {
+    const projects = Array.isArray(row.Projects) ? row.Projects : [];
+    projects.forEach((project) => {
+      const policyReason = project.Policy_Reason ?? project.policy_reason ?? "";
+      const code = extractReasonCodeFromPolicyText(policyReason);
+      const label = cleanPolicyLabel(policyReason);
+
+      if (code && label) {
+        catalog[code] = label;
+      }
+    });
+  });
+
+  return catalog;
 }
 
 async function loadNeighborhoodData() {
@@ -213,18 +332,25 @@ function parseReasonCodes(reasonRaw) {
   const text = String(reasonRaw || "").toUpperCase().trim();
   if (!text) return [];
 
-  return [...new Set(
-    text
-      .replace(/[\/&]/g, ",")
-      .split(",")
-      .map((token) => token.trim())
-      .filter(Boolean)
-      .map((token) => {
-        const match = token.match(/[A-Z]/);
-        return match ? match[0] : null;
-      })
-      .filter(Boolean)
-  )];
+  return [
+    ...new Set(
+      text
+        .replace(/[\/&]/g, ",")
+        .split(",")
+        .map((token) => normalizeReasonCode(token))
+        .filter(Boolean)
+    ),
+  ];
+}
+
+function getReasonLabel(code, catalog) {
+  if (!code) return catalog.Unspecified || REASON_BASE_LABELS.Unspecified;
+  if (catalog[code]) return catalog[code];
+
+  const base = code[0];
+  if (catalog[base]) return catalog[base];
+  if (REASON_BASE_LABELS[base]) return REASON_BASE_LABELS[base];
+  return code;
 }
 
 function aggregateRows(records, keySelector, amountSelector) {
@@ -277,6 +403,18 @@ function buildAnalyticsPayload(rawRecords) {
 
   const byReason = [...byReasonMap.values()].sort((a, b) => b.Total_Spend - a.Total_Spend);
 
+  const byYear = aggregateRows(
+    records.filter((row) => Number.isFinite(row.year)),
+    (row) => String(row.year),
+    (row) => row.amount
+  )
+    .sort((a, b) => Number(a.key) - Number(b.key))
+    .map((row) => ({
+      Year: Number(row.key),
+      Total_Spend: row.spend,
+      Contract_Count: row.contracts,
+    }));
+
   const topVendors = aggregateRows(records, (row) => row.vendor, (row) => row.amount)
     .sort((a, b) => b.spend - a.spend)
     .slice(0, 15)
@@ -313,6 +451,7 @@ function buildAnalyticsPayload(rawRecords) {
       No_Spend: acanNo.reduce((sum, row) => sum + row.amount, 0),
     },
     byDepartment,
+    byYear,
     byReason,
     topVendors,
     topContracts,
@@ -431,6 +570,14 @@ function setupFilterHandlers() {
   document.querySelector("#filter-large").addEventListener("change", updateFilters);
 }
 
+function setupThemeHandler() {
+  const select = document.querySelector("#map-theme");
+  select.addEventListener("change", () => {
+    state.activeTheme = select.value;
+    applyMapTheme(select.value);
+  });
+}
+
 function populateDepartmentFilter(rows) {
   const select = document.querySelector("#dept-filter");
   const departments = [...new Set(rows.map((row) => row.Top_Department).filter(Boolean))].sort();
@@ -443,6 +590,8 @@ function populateDepartmentFilter(rows) {
 }
 
 function initializeMap(rows) {
+  const theme = MAP_THEMES[state.activeTheme] || MAP_THEMES["civic-night"];
+
   state.map = new maplibregl.Map({
     container: "map",
     style: {
@@ -481,7 +630,7 @@ function initializeMap(rows) {
       type: "circle",
       source: "spending",
       paint: {
-        "circle-color": "#ffb800",
+        "circle-color": theme.glow,
         "circle-radius": ["interpolate", ["linear"], ["get", "spend"], 20000, 6, 500000, 16, 5000000, 30],
         "circle-opacity": 0.2,
         "circle-blur": 0.7,
@@ -498,19 +647,21 @@ function initializeMap(rows) {
           ["linear"],
           ["get", "spend"],
           20000,
-          "#d9eaa3",
+          theme.stops[0],
           200000,
-          "#ffba20",
+          theme.stops[1],
           500000,
-          "#ff9d2f",
+          theme.stops[2],
           5000000,
-          "#ffb4ab",
+          theme.stops[3],
         ],
-        "circle-stroke-color": "#111316",
+        "circle-stroke-color": theme.stroke,
         "circle-stroke-width": 2,
         "circle-radius": ["interpolate", ["linear"], ["get", "spend"], 20000, 6, 200000, 10, 500000, 15, 5000000, 22],
       },
     });
+
+    applyMapTheme(state.activeTheme);
 
     state.map.on("click", "spending-points", (event) => {
       const feature = event.features?.[0];
@@ -521,7 +672,7 @@ function initializeMap(rows) {
 
       setDrawerContent(feature.properties);
 
-      new maplibregl.Popup({ closeButton: true })
+      new maplibregl.Popup({ closeButton: true, className: "spend-popup" })
         .setLngLat(coordinates)
         .setHTML(`
           <div class="popup">
@@ -545,10 +696,59 @@ function initializeMap(rows) {
   });
 }
 
-function renderAnalytics(analytics) {
+function applyMapTheme(themeKey) {
+  if (!state.map) return;
+
+  const theme = MAP_THEMES[themeKey] || MAP_THEMES["civic-night"];
+
+  if (!state.map.getLayer("osm")) return;
+
+  Object.entries(theme.raster).forEach(([property, value]) => {
+    state.map.setPaintProperty("osm", property, value);
+  });
+
+  if (state.map.getLayer("spending-glow")) {
+    state.map.setPaintProperty("spending-glow", "circle-color", theme.glow);
+  }
+
+  if (state.map.getLayer("spending-points")) {
+    state.map.setPaintProperty("spending-points", "circle-color", [
+      "interpolate",
+      ["linear"],
+      ["get", "spend"],
+      20000,
+      theme.stops[0],
+      200000,
+      theme.stops[1],
+      500000,
+      theme.stops[2],
+      5000000,
+      theme.stops[3],
+    ]);
+    state.map.setPaintProperty("spending-points", "circle-stroke-color", theme.stroke);
+  }
+}
+
+function renderAnalytics(analytics, reasonCatalog) {
   const root = document.querySelector("#analytics-root");
   const maxDept = Math.max(...analytics.byDepartment.map((item) => item.Total_Spend), 1);
   const maxReason = Math.max(...analytics.byReason.map((item) => item.Total_Spend), 1);
+  const yearRowsSource = Array.isArray(analytics.byYear) ? analytics.byYear : [];
+  const maxYearSpend = Math.max(...yearRowsSource.map((item) => item.Total_Spend), 1);
+
+  const firstYear = analytics.totals.Year_Start;
+  const lastYear = analytics.totals.Year_End;
+  const firstYearSpend =
+    yearRowsSource.find((entry) => entry.Year === firstYear)?.Total_Spend || 0;
+  const lastYearSpend =
+    yearRowsSource.find((entry) => entry.Year === lastYear)?.Total_Spend || 0;
+  const trendPct = firstYearSpend > 0
+    ? ((lastYearSpend - firstYearSpend) / firstYearSpend) * 100
+    : null;
+  const peakYear = yearRowsSource.reduce(
+    (max, item) => (item.Total_Spend > max.Total_Spend ? item : max),
+    { Year: null, Total_Spend: 0, Contract_Count: 0 }
+  );
 
   const deptRows = analytics.byDepartment.slice(0, 8).map(
     (item) => `
@@ -563,9 +763,23 @@ function renderAnalytics(analytics) {
   const reasonRows = analytics.byReason.slice(0, 8).map(
     (item) => `
       <div class="bar-row">
-        <div class="bar-label">${escapeHtml(item.Reason_Code)}</div>
+        <div class="bar-label reason-label-wrap">
+          <strong>${escapeHtml(item.Reason_Code)}</strong>
+          <span>${escapeHtml(getReasonLabel(item.Reason_Code, reasonCatalog))}</span>
+        </div>
         <div class="bar-track"><span class="bar-fill muted" style="width:${(item.Total_Spend / maxReason) * 100}%"></span></div>
         <div class="bar-value">${formatCurrency(item.Total_Spend)}</div>
+      </div>
+    `
+  ).join("");
+
+  const yearlyRows = yearRowsSource.map(
+    (item) => `
+      <div class="year-row">
+        <div class="year-label">${escapeHtml(String(item.Year))}</div>
+        <div class="bar-track"><span class="bar-fill" style="width:${(item.Total_Spend / maxYearSpend) * 100}%"></span></div>
+        <div class="bar-value">${formatCurrency(item.Total_Spend)}</div>
+        <div class="year-contracts">${item.Contract_Count.toLocaleString("en-CA")} contracts</div>
       </div>
     `
   ).join("");
@@ -590,18 +804,45 @@ function renderAnalytics(analytics) {
       <article class="kpi-card"><span>Vendors</span><strong>${analytics.totals.Unique_Vendors}</strong></article>
     </div>
 
+    <section class="analytics-card context-grid">
+      <article class="context-card">
+        <h2>Time Span</h2>
+        <p>${firstYear ? escapeHtml(String(firstYear)) : "-"} to ${lastYear ? escapeHtml(String(lastYear)) : "-"}</p>
+        <small>How long this dataset has been reporting non-standard procurement.</small>
+      </article>
+      <article class="context-card">
+        <h2>Peak Year</h2>
+        <p>${peakYear.Year ? escapeHtml(String(peakYear.Year)) : "-"} · ${formatCurrency(peakYear.Total_Spend || 0)}</p>
+        <small>${(peakYear.Contract_Count || 0).toLocaleString("en-CA")} contracts were recorded in the highest-spend year.</small>
+      </article>
+      <article class="context-card">
+        <h2>Trend</h2>
+        <p>${trendPct === null ? "-" : `${trendPct >= 0 ? "+" : ""}${trendPct.toFixed(1)}%`}</p>
+        <small>Change in spend from first to latest year in this dataset.</small>
+      </article>
+    </section>
+
     <section class="analytics-card">
-      <h2>Department Spend</h2>
+      <h2>Year-by-Year Spend</h2>
+      <p class="section-copy">Track procurement pressure over time, including volume of contracts each year.</p>
+      <div class="year-grid">${yearlyRows || '<p class="empty-copy">Yearly detail is unavailable in this dataset.</p>'}</div>
+    </section>
+
+    <section class="analytics-card">
+      <h2>Where Money Concentrates</h2>
+      <p class="section-copy">Top departments by total non-standard spend.</p>
       ${deptRows}
     </section>
 
     <section class="analytics-card two-col">
       <div>
-        <h2>Reason Mix</h2>
+        <h2>Why Exceptions Were Used</h2>
+        <p class="section-copy">Reason codes translated to plain labels when available from source policy text.</p>
         ${reasonRows}
       </div>
       <div>
         <h2>ACAN Share</h2>
+        <p class="section-copy">Advance Contract Award Notice flag usage.</p>
         <p class="acan-row"><span>Yes</span><strong>${analytics.acan.Yes_Count.toLocaleString("en-CA")}</strong><span>${formatCurrency(analytics.acan.Yes_Spend)}</span></p>
         <p class="acan-row"><span>No</span><strong>${analytics.acan.No_Count.toLocaleString("en-CA")}</strong><span>${formatCurrency(analytics.acan.No_Spend)}</span></p>
       </div>
@@ -631,7 +872,7 @@ function activateView(viewName) {
 
   if (viewName === "allocation" && !state.analyticsRendered) {
     if (state.analytics) {
-      renderAnalytics(state.analytics);
+      renderAnalytics(state.analytics, state.reasonCatalog);
       state.analyticsRendered = true;
     }
   }
@@ -643,8 +884,10 @@ async function boot() {
     state.rows = rows;
 
     updateNeighborhoodStats(rows);
+    state.reasonCatalog = buildReasonCatalogFromNeighborhoods(rows);
     populateDepartmentFilter(rows);
     setupFilterHandlers();
+    setupThemeHandler();
     initializeMap(rows);
 
     loadAnalyticsData()
