@@ -1,9 +1,229 @@
 [
   {
+    "Neighborhood": "Avalon",
+    "Total_Spend": 166860.0,
+    "Project_Count": 1,
+    "Top_Department": "Transit",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Brevoort Park",
+    "Total_Spend": 123315.2,
+    "Project_Count": 1,
+    "Top_Department": "Corporate Revenue",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "CN Industrial",
+    "Total_Spend": 585000.0,
+    "Project_Count": 4,
+    "Top_Department": "Fleet",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "College Park",
+    "Total_Spend": 173045.8,
+    "Project_Count": 1,
+    "Top_Department": "Saskatoon Water",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "College Park East",
+    "Total_Spend": 37560.1,
+    "Project_Count": 1,
+    "Top_Department": "City Clerk's",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Confederation Park",
+    "Total_Spend": 29540.43,
+    "Project_Count": 1,
+    "Top_Department": "Water & Waste Operations",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Downtown",
+    "Total_Spend": 267929.5,
+    "Project_Count": 2,
+    "Top_Department": "Technical Services",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Dundonald",
+    "Total_Spend": 42229.95,
+    "Project_Count": 1,
+    "Top_Department": "Facilities",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Erindale",
+    "Total_Spend": 70966.8,
+    "Project_Count": 1,
+    "Top_Department": "Saskatoon Water",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Fairhaven",
+    "Total_Spend": 195496.6,
+    "Project_Count": 1,
+    "Top_Department": "Saskatoon Water",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Forest Grove",
+    "Total_Spend": 28426.8,
+    "Project_Count": 1,
+    "Top_Department": "Recreation and Community Development",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Haultain",
+    "Total_Spend": 100000.0,
+    "Project_Count": 1,
+    "Top_Department": "Recreation & Community Development",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Hillcrest Management Area",
+    "Total_Spend": 66150.0,
+    "Project_Count": 1,
+    "Top_Department": "Technical Services",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "North Industrial",
+    "Total_Spend": 117932.51,
+    "Project_Count": 2,
+    "Top_Department": "C & D",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Nutana",
+    "Total_Spend": 40590.0,
+    "Project_Count": 1,
+    "Top_Department": "Human Resources",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Parkridge",
+    "Total_Spend": 144750.46,
+    "Project_Count": 2,
+    "Top_Department": "Technical Services",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "River Heights",
+    "Total_Spend": 31850.0,
+    "Project_Count": 1,
+    "Top_Department": "C & D",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Riversdale",
+    "Total_Spend": 414896.68,
+    "Project_Count": 4,
+    "Top_Department": "S L & P",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Rosewood",
+    "Total_Spend": 151661.58,
+    "Project_Count": 2,
+    "Top_Department": "Saskatoon Water",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "SaskPower Management Area",
+    "Total_Spend": 289459.25,
+    "Project_Count": 6,
+    "Top_Department": "WTP",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "Stonebridge",
+    "Total_Spend": 5072267.0,
+    "Project_Count": 3,
+    "Top_Department": "Recreation & Community Development",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
     "Neighborhood": "U of S Lands Management Area",
-    "Total_Spend": 29800.0,
-    "Contract_Count": 1,
+    "Total_Spend": 80216.2,
+    "Project_Count": 2,
     "Top_Department": "Community Services",
+    "Coordinates": [
+      -106.6702,
+      52.1332
+    ]
+  },
+  {
+    "Neighborhood": "West Industrial",
+    "Total_Spend": 78487.02,
+    "Project_Count": 1,
+    "Top_Department": "Parks",
     "Coordinates": [
       -106.6702,
       52.1332
