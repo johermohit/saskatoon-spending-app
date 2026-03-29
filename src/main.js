@@ -16,63 +16,55 @@ app.innerHTML = `
     </header>
 
     <section class="view is-active" data-view="neighborhoods">
-      <aside class="left-panel">
-        <p class="eyebrow">Civic Monolith</p>
-        <h1 class="title">Neighborhood Allocation Atlas</h1>
-        <p class="lead">
-          Track where procurement dollars land, then open a neighborhood to see vendor,
-          contract intent, and policy reason in plain language.
-        </p>
-
-        <div class="stats-grid">
-          <article class="stat-card">
-            <span class="stat-label">Neighborhoods</span>
-            <strong id="stat-neighborhoods">-</strong>
-          </article>
-          <article class="stat-card">
-            <span class="stat-label">Total Spend</span>
-            <strong id="stat-total">-</strong>
-          </article>
-          <article class="stat-card">
-            <span class="stat-label">Mapped Contracts</span>
-            <strong id="stat-contracts">-</strong>
-          </article>
-        </div>
-
-        <section class="control-group">
-          <h2>Department Filter</h2>
-          <select id="dept-filter">
-            <option value="">All Departments</option>
-          </select>
-        </section>
-
-        <section class="control-group">
-          <h2>Map Theme</h2>
-          <select id="map-theme">
-            <option value="civic-night">Civic Night</option>
-            <option value="paper-light">Paper Light</option>
-            <option value="high-contrast">High Contrast</option>
-          </select>
-        </section>
-
-        <section class="control-group">
-          <h2>Spend Bands</h2>
-          <label><input type="checkbox" id="filter-small" checked /> $20k-$100k</label>
-          <label><input type="checkbox" id="filter-medium" checked /> $100k-$500k</label>
-          <label><input type="checkbox" id="filter-large" checked /> $500k+</label>
-        </section>
-
-        <section class="control-group">
-          <h2>Legend</h2>
-          <div class="legend-row"><span class="swatch low"></span><span>$20k-$100k</span></div>
-          <div class="legend-row"><span class="swatch med"></span><span>$100k-$500k</span></div>
-          <div class="legend-row"><span class="swatch high"></span><span>$500k-$2.5M</span></div>
-          <div class="legend-row"><span class="swatch max"></span><span>$2.5M+</span></div>
-        </section>
-      </aside>
-
       <section class="map-stage">
         <div id="map" aria-label="Saskatoon neighborhood spending map"></div>
+
+        <aside class="map-hero">
+          <p class="eyebrow">City Spending, Made Legible</p>
+          <h1 class="title">Neighborhood Spending Atlas</h1>
+          <p class="lead">
+            Tap a marker to see where money went, who received it, and why a non-standard path was used.
+          </p>
+          <div class="hero-kpis">
+            <p><span>Neighborhoods</span><strong id="stat-neighborhoods">-</strong></p>
+            <p><span>Total Spend</span><strong id="stat-total">-</strong></p>
+          </div>
+          <p class="hero-note">Use map controls to focus by department, theme, or spend range.</p>
+        </aside>
+
+        <aside class="map-tools" aria-label="Map controls and legend">
+          <section class="control-group compact">
+            <h2>Department</h2>
+            <select id="dept-filter">
+              <option value="">All Departments</option>
+            </select>
+          </section>
+
+          <section class="control-group compact">
+            <h2>Map Theme</h2>
+            <select id="map-theme">
+              <option value="civic-night">Civic Night</option>
+              <option value="paper-light">Paper Light</option>
+              <option value="high-contrast">High Contrast</option>
+            </select>
+          </section>
+
+          <section class="control-group compact">
+            <h2>Spend Bands</h2>
+            <label><input type="checkbox" id="filter-small" checked /> $20k-$100k</label>
+            <label><input type="checkbox" id="filter-medium" checked /> $100k-$500k</label>
+            <label><input type="checkbox" id="filter-large" checked /> $500k+</label>
+          </section>
+
+          <section class="control-group compact">
+            <h2>Legend</h2>
+            <div class="legend-row"><span class="swatch low"></span><span>$20k-$100k</span></div>
+            <div class="legend-row"><span class="swatch med"></span><span>$100k-$500k</span></div>
+            <div class="legend-row"><span class="swatch high"></span><span>$500k-$2.5M</span></div>
+            <div class="legend-row"><span class="swatch max"></span><span>$2.5M+</span></div>
+          </section>
+        </aside>
+
         <aside class="detail-panel" id="detail-panel">
           <div class="panel-header">
             <p class="eyebrow">Neighborhood Audit</p>
@@ -97,24 +89,38 @@ app.innerHTML = `
 
     <section class="view" data-view="philosophy">
       <section class="philosophy-shell">
-        <p class="eyebrow">Foundational Mission</p>
-        <h1 class="title">The Architecture of Accountability</h1>
+        <p class="eyebrow">Why This Exists</p>
+        <h1 class="title">Public Spending Should Be Understandable</h1>
         <p class="lead">
-          Every civic dollar should be legible as place, impact, and procurement intent.
-          This interface treats budget records as structural evidence, not abstract totals.
+          Most people do not read procurement spreadsheets, but everyone lives with the results.
+          This project turns hard-to-read records into a neighborhood story residents can use.
         </p>
         <article class="philosophy-card">
-          <h2>Zero-Dollar Ethos</h2>
+          <h2>1. Start With Place</h2>
           <p>
-            We begin with proof, not assumptions. Neighborhood totals are shown with
-            auditable provenance so residents can verify each layer of spend.
+            We begin with neighborhoods because people think in places they know.
+            Clicking a marker should answer one practical question: what happened here?
           </p>
         </article>
         <article class="philosophy-card">
-          <h2>Civic Ledger</h2>
+          <h2>2. Show Receipts, Not Just Totals</h2>
           <p>
-            Allocation Intelligence translates raw contracts into clear yearly patterns,
-            concentration risks, and policy exceptions for public scrutiny.
+            Every high-level number should lead to vendor, amount, and decision reason.
+            That makes this a public ledger people can inspect, question, and trust.
+          </p>
+        </article>
+        <article class="philosophy-card">
+          <h2>3. Explain Why Exceptions Happen</h2>
+          <p>
+            Non-standard procurement is sometimes necessary. What matters is clarity:
+            when exceptions are used, where they are concentrated, and how that changes over time.
+          </p>
+        </article>
+        <article class="philosophy-card">
+          <h2>4. Build for Residents First</h2>
+          <p>
+            Plain language, readable contrast, and simple controls are not cosmetic.
+            They are accessibility choices so more people can participate in civic oversight.
           </p>
         </article>
       </section>
@@ -530,11 +536,11 @@ function buildGeojson(rows) {
 
 function updateNeighborhoodStats(rows) {
   const totalSpend = rows.reduce((sum, row) => sum + Number(row.Total_Spend), 0);
-  const totalContracts = rows.reduce((sum, row) => sum + Number(row.Project_Count || 0), 0);
+  const neighborhoodsEl = document.querySelector("#stat-neighborhoods");
+  const totalEl = document.querySelector("#stat-total");
 
-  document.querySelector("#stat-neighborhoods").textContent = String(rows.length);
-  document.querySelector("#stat-total").textContent = formatCurrency(totalSpend);
-  document.querySelector("#stat-contracts").textContent = totalContracts.toLocaleString("en-CA");
+  if (neighborhoodsEl) neighborhoodsEl.textContent = String(rows.length);
+  if (totalEl) totalEl.textContent = formatCurrency(totalSpend);
 }
 
 function setupFilterHandlers() {
@@ -904,7 +910,7 @@ async function boot() {
       });
   } catch (error) {
     console.error(error);
-    const target = document.querySelector(".left-panel") || document.body;
+    const target = document.querySelector(".map-hero") || document.body;
     target.insertAdjacentHTML(
       "beforeend",
       `<p class="error">Could not load data artifacts. Run <code>npm run build:data</code> and verify files under <code>public/data</code>.</p>`

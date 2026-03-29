@@ -94,15 +94,7 @@ body,
 }
 
 .view[data-view="neighborhoods"].is-active {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-}
-
-.left-panel {
-  padding: 1.25rem;
-  background: linear-gradient(180deg, rgba(20, 23, 27, 0.97), rgba(13, 16, 19, 0.98));
-  overflow-y: auto;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: block;
 }
 
 .eyebrow {
@@ -160,6 +152,11 @@ body,
   padding: 0.85rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.control-group.compact {
+  margin-top: 0.7rem;
+  padding: 0.72rem;
 }
 
 .control-group h2 {
@@ -227,6 +224,76 @@ body,
   background: #101317;
 }
 
+.map-hero,
+.map-tools,
+.detail-panel {
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.32);
+}
+
+.map-hero {
+  position: absolute;
+  left: 1.2rem;
+  top: 1.2rem;
+  width: min(360px, calc(100% - 2.4rem));
+  background: rgba(14, 18, 22, 0.88);
+  padding: 1rem;
+  z-index: 3;
+}
+
+.map-hero .title {
+  font-size: clamp(1.7rem, 2.2vw, 2.5rem);
+  line-height: 0.95;
+}
+
+.hero-kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+}
+
+.hero-kpis p {
+  margin: 0;
+  padding: 0.55rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.hero-kpis span {
+  display: block;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.6rem;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+}
+
+.hero-kpis strong {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1.1rem;
+}
+
+.hero-note {
+  margin: 0.65rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.map-tools {
+  position: absolute;
+  left: 1.2rem;
+  top: 320px;
+  width: min(290px, calc(100% - 2.4rem));
+  max-height: calc(100vh - 420px);
+  overflow: auto;
+  background: rgba(14, 18, 22, 0.88);
+  padding: 0.5rem;
+  z-index: 3;
+}
+
 #map {
   position: absolute;
   inset: 0;
@@ -239,11 +306,9 @@ body,
   bottom: 1.2rem;
   width: min(390px, calc(100% - 2.4rem));
   background: rgba(18, 22, 27, 0.86);
-  backdrop-filter: blur(18px);
   padding: 1rem;
   overflow-y: auto;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.32);
+  z-index: 3;
 }
 
 .panel-header h2 {
@@ -534,12 +599,9 @@ body,
 }
 
 @media (max-width: 1200px) {
-  .view[data-view="neighborhoods"].is-active {
-    grid-template-columns: 1fr;
-  }
-
-  .left-panel {
-    max-height: 50vh;
+  .map-tools {
+    top: 300px;
+    max-height: calc(100vh - 420px);
   }
 
   .map-stage {
@@ -580,5 +642,21 @@ body,
     top: auto;
     height: min(52vh, 420px);
     bottom: 0.7rem;
+  }
+
+  .map-hero {
+    left: 0.7rem;
+    right: 0.7rem;
+    width: auto;
+    top: 0.7rem;
+  }
+
+  .map-tools {
+    left: 0.7rem;
+    right: 0.7rem;
+    width: auto;
+    top: auto;
+    bottom: min(54vh, 440px);
+    max-height: 210px;
   }
 }
