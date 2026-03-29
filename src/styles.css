@@ -819,6 +819,33 @@ body,
   gap: 1rem;
 }
 
+.philosophy-layout {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.philosophy-layout .philosophy-card {
+  margin-top: 0;
+}
+
+.philosophy-story p + p {
+  margin-top: 0.7rem;
+}
+
+.philosophy-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.philosophy-list li + li {
+  margin-top: 0.55rem;
+}
+
 .credit-card a {
   color: var(--primary);
   text-decoration: none;
@@ -839,6 +866,10 @@ body,
   margin: 0;
   color: var(--ink-soft);
   line-height: 1.55;
+}
+
+.credit-card p + p {
+  margin-top: 0.55rem;
 }
 
 .philosophy-quote {
@@ -925,7 +956,8 @@ body,
   .reason-mosaic,
   .reason-grid,
   .story-strip,
-  .principles-grid {
+  .principles-grid,
+  .philosophy-layout {
     grid-template-columns: 1fr;
   }
 

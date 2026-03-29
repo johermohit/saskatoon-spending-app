@@ -81,34 +81,44 @@ app.innerHTML = `
 
     <section class="view" data-view="philosophy">
       <section class="philosophy-shell">
-        <p class="eyebrow">Why This Exists</p>
-        <h1 class="title">Public Spending Should Be Understandable</h1>
+        <p class="eyebrow">Why This Project Exists</p>
+        <h1 class="title">City Spending Should Make Sense to Regular People</h1>
         <p class="lead">
-          Most people do not read procurement spreadsheets, but everyone lives with the results.
-          This project turns hard-to-read records into a clear civic map anyone can use.
+          Most residents never open a procurement spreadsheet, but everyone feels the outcome of those decisions.
+          This project translates contract records into plain language so people can see what happened nearby and ask better questions.
         </p>
-        <blockquote class="philosophy-quote">"Accountability starts when people can actually read the data."</blockquote>
-        <div class="principles-grid">
-          <article class="philosophy-card">
-            <h2>Principle 1: Start With Place</h2>
+        <blockquote class="philosophy-quote">
+          "When people can follow the money without a decoder ring, accountability gets real."
+        </blockquote>
+        <div class="philosophy-layout">
+          <article class="philosophy-card philosophy-story">
+            <h2>What We Are Trying To Fix</h2>
             <p>
-              We begin with neighborhoods because people think in places they know.
-              Clicking a marker should answer one practical question: what happened here?
+              Public spending data usually lives in long tables full of codes, abbreviations, and policy jargon.
+              That format works for internal systems, but not for residents trying to understand what changed in their neighborhood.
+            </p>
+            <p>
+              This app keeps the details intact while removing the friction. You can move from a city-wide view to a specific vendor,
+              project amount, and procurement reason in a few clicks.
             </p>
           </article>
-          <article class="philosophy-card">
-            <h2>Principle 2: Show Receipts, Not Just Totals</h2>
-            <p>
-              Every high-level number should lead to vendor, amount, and decision reason.
-              This is a civic ledger designed for inspection, challenge, and trust.
-            </p>
+          <article class="philosophy-card philosophy-principles">
+            <h2>How This App Helps</h2>
+            <ul class="philosophy-list">
+              <li>Start with place, because people care most about what is happening where they live.</li>
+              <li>Show receipts, not just totals, so each number traces back to a real decision.</li>
+              <li>Keep the language plain, so residents, journalists, and staff can use the same source of truth.</li>
+            </ul>
           </article>
         </div>
         <article class="philosophy-card credit-card">
           <h2>Built By</h2>
           <p>
-            Mohit Joshi · <a href="https://linkedin.com/in/hellomohit" target="_blank" rel="noreferrer">linkedin.com/in/hellomohit</a>
-            · <a href="https://makewithmohit.com" target="_blank" rel="noreferrer">makewithmohit.com</a>
+            Created by Mohit Johar, who builds practical civic and data products people can actually use.
+          </p>
+          <p>
+            Connect on <a href="https://linkedin.com/in/hellomohit" target="_blank" rel="noreferrer">LinkedIn</a>
+            or explore more work at <a href="https://makewithmohit.com" target="_blank" rel="noreferrer">makewithmohit.com</a>.
           </p>
         </article>
       </section>
