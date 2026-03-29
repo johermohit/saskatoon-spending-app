@@ -5,3 +5,26 @@ __pycache__/
 node_modules/
 dist/
 .vercel/
+.agent
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Ignore log files and databases
+*.log
+*.sqlite3
+*.db
+
+
+
+
+
+
+
+
+
+
+
+                                    

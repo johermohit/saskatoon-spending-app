@@ -94,38 +94,37 @@ map.on("load", async () => {
 
     const geojson = {
       type: "FeatureCollection",
-      features: rows.map((row) => ({
-        type: "Feature",
-        properties: {
-          neighborhood: row.Neighborhood,
-          spend: Number(row.Total_Spend),
-          contracts: Number(row.Contract_Count || 0),
-          topDept: row.Top_Department || "Unknown",
-        },
-        geometry: {
-          type: "Point",
-          coordinates: row.Coordinates,
-        },
-      })),
+      features: rows.map((row, i) => {
+        const jitterAmount = 0.015;
+        const angle = (i / rows.length) * Math.PI * 2;
+        const distance = jitterAmount * (0.3 + Math.random() * 0.7);
+        const lng = row.Coordinates[0] + Math.cos(angle) * distance;
+        const lat = row.Coordinates[1] + Math.sin(angle) * distance;
+        return {
+          type: "Feature",
+          properties: {
+            neighborhood: row.Neighborhood,
+            spend: Number(row.Total_Spend),
+            contracts: Number(row.Contract_Count || 0),
+            topDept: row.Top_Department || "Unknown",
+          },
+          geometry: {
+            type: "Point",
+            coordinates: [lng, lat],
+          },
+        };
+      }),
     };
 
     map.addSource("spending", {
       type: "geojson",
       data: geojson,
-      cluster: true,
-      clusterMaxZoom: 12,
-      clusterRadius: 40,
-      clusterProperties: {
-        spendSum: ["+", ["get", "spend"]],
-        contractsSum: ["+", ["get", "contracts"]],
-      },
     });
 
     map.addLayer({
       id: "spending-glow",
       type: "circle",
       source: "spending",
-      filter: ["!", ["has", "point_count"]],
       paint: {
         "circle-color": "#ffb347",
         "circle-radius": [
@@ -148,7 +147,6 @@ map.on("load", async () => {
       id: "spending-points",
       type: "circle",
       source: "spending",
-      filter: ["!", ["has", "point_count"]],
       paint: {
         "circle-color": [
           "interpolate",
@@ -182,43 +180,7 @@ map.on("load", async () => {
       },
     });
 
-    map.addLayer({
-      id: "spending-clusters",
-      type: "circle",
-      source: "spending",
-      filter: ["has", "point_count"],
-      paint: {
-        "circle-color": "#1f2837",
-        "circle-radius": [
-          "interpolate",
-          ["linear"],
-          ["get", "point_count"],
-          2,
-          16,
-          8,
-          22,
-          32,
-          30,
-        ],
-        "circle-stroke-color": "#7ec8ff",
-        "circle-stroke-width": 1.5,
-      },
-    });
 
-    map.addLayer({
-      id: "spending-cluster-count",
-      type: "symbol",
-      source: "spending",
-      filter: ["has", "point_count"],
-      layout: {
-        "text-field": "{point_count_abbreviated}",
-        "text-font": ["Open Sans Bold"],
-        "text-size": 12,
-      },
-      paint: {
-        "text-color": "#e8f4ff",
-      },
-    });
 
     map.on("click", "spending-points", (event) => {
       const feature = event.features?.[0];
@@ -257,12 +219,6 @@ map.on("load", async () => {
       map.getCanvas().style.cursor = "pointer";
     });
     map.on("mouseleave", "spending-points", () => {
-      map.getCanvas().style.cursor = "";
-    });
-    map.on("mouseenter", "spending-clusters", () => {
-      map.getCanvas().style.cursor = "pointer";
-    });
-    map.on("mouseleave", "spending-clusters", () => {
       map.getCanvas().style.cursor = "";
     });
   } catch (error) {

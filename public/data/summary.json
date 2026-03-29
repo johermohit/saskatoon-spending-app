@@ -4,9 +4,11 @@
     "Total_Spend": 166860.0,
     "Project_Count": 1,
     "Top_Department": "Transit",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.64,
+      52.098
     ]
   },
   {
@@ -14,9 +16,11 @@
     "Total_Spend": 123315.2,
     "Project_Count": 1,
     "Top_Department": "Corporate Revenue",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.615,
+      52.11
     ]
   },
   {
@@ -24,9 +28,11 @@
     "Total_Spend": 585000.0,
     "Project_Count": 4,
     "Top_Department": "Fleet",
+    "Context": "The project scope includes, but is not limited to, drainage ditch construction, culvert installation, road reconstruction and/or any related road structure ...",
+    "Link": "https://sasktenders.ca/content/public/print.aspx?competitionId=9b6e8f08-cfb6-4e1e-bfcb-f305eff6c142",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.645,
+      52.095
     ]
   },
   {
@@ -34,9 +40,11 @@
     "Total_Spend": 173045.8,
     "Project_Count": 1,
     "Top_Department": "Saskatoon Water",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.59,
+      52.125
     ]
   },
   {
@@ -44,9 +52,11 @@
     "Total_Spend": 37560.1,
     "Project_Count": 1,
     "Top_Department": "City Clerk's",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.57,
+      52.12
     ]
   },
   {
@@ -54,9 +64,11 @@
     "Total_Spend": 29540.43,
     "Project_Count": 1,
     "Top_Department": "Water & Waste Operations",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.72,
+      52.145
     ]
   },
   {
@@ -64,9 +76,11 @@
     "Total_Spend": 267929.5,
     "Project_Count": 2,
     "Top_Department": "Technical Services",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.662,
+      52.128
     ]
   },
   {
@@ -74,9 +88,11 @@
     "Total_Spend": 42229.95,
     "Project_Count": 1,
     "Top_Department": "Facilities",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.73,
+      52.15
     ]
   },
   {
@@ -84,6 +100,8 @@
     "Total_Spend": 70966.8,
     "Project_Count": 1,
     "Top_Department": "Saskatoon Water",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
       -106.6702,
       52.1332
@@ -94,9 +112,11 @@
     "Total_Spend": 195496.6,
     "Project_Count": 1,
     "Top_Department": "Saskatoon Water",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.72,
+      52.12
     ]
   },
   {
@@ -104,6 +124,8 @@
     "Total_Spend": 28426.8,
     "Project_Count": 1,
     "Top_Department": "Recreation and Community Development",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
       -106.6702,
       52.1332
@@ -114,6 +136,8 @@
     "Total_Spend": 100000.0,
     "Project_Count": 1,
     "Top_Department": "Recreation & Community Development",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
       -106.6702,
       52.1332
@@ -124,6 +148,8 @@
     "Total_Spend": 66150.0,
     "Project_Count": 1,
     "Top_Department": "Technical Services",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
       -106.6702,
       52.1332
@@ -134,9 +160,11 @@
     "Total_Spend": 117932.51,
     "Project_Count": 2,
     "Top_Department": "C & D",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.65,
+      52.17
     ]
   },
   {
@@ -144,6 +172,8 @@
     "Total_Spend": 40590.0,
     "Project_Count": 1,
     "Top_Department": "Human Resources",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
       -106.6702,
       52.1332
@@ -154,9 +184,11 @@
     "Total_Spend": 144750.46,
     "Project_Count": 2,
     "Top_Department": "Technical Services",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.74,
+      52.135
     ]
   },
   {
@@ -164,6 +196,8 @@
     "Total_Spend": 31850.0,
     "Project_Count": 1,
     "Top_Department": "C & D",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
       -106.6702,
       52.1332
@@ -174,9 +208,11 @@
     "Total_Spend": 414896.68,
     "Project_Count": 4,
     "Top_Department": "S L & P",
+    "Context": "Bid Type: RFQ-High Score. Bid Number: RFQ 26-0006. Bid Name: Riversdale Water Main Replacements and Streetscaping. Bid Status: Open.",
+    "Link": "https://saskatoon.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/a6f1bd38-eed3-41c1-b7e5-64b6c52b5c73",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.675,
+      52.122
     ]
   },
   {
@@ -184,9 +220,11 @@
     "Total_Spend": 151661.58,
     "Project_Count": 2,
     "Top_Department": "Saskatoon Water",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.575,
+      52.085
     ]
   },
   {
@@ -194,9 +232,11 @@
     "Total_Spend": 289459.25,
     "Project_Count": 6,
     "Top_Department": "WTP",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.64,
+      52.15
     ]
   },
   {
@@ -204,9 +244,11 @@
     "Total_Spend": 5072267.0,
     "Project_Count": 3,
     "Top_Department": "Recreation & Community Development",
+    "Context": "In June 2024, City Council approved amendments to the Corridor Land Use and Corridor Growth Boundary areas throughout the city. The subject site is within ...",
+    "Link": "https://www.saskatoon.ca/engage/stonebridge-455-lewin-way",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.6231,
+      52.0886
     ]
   },
   {
@@ -214,9 +256,11 @@
     "Total_Spend": 80216.2,
     "Project_Count": 2,
     "Top_Department": "Community Services",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.62,
+      52.14
     ]
   },
   {
@@ -224,9 +268,11 @@
     "Total_Spend": 78487.02,
     "Project_Count": 1,
     "Top_Department": "Parks",
+    "Context": "Infrastructure maintenance and local improvements.",
+    "Link": "#",
     "Coordinates": [
-      -106.6702,
-      52.1332
+      -106.7,
+      52.09
     ]
   }
 ]
