@@ -29,7 +29,49 @@ app.innerHTML = `
         </article>
       </div>
 
-      <p class="hint">Click a marker to inspect neighborhood spend details.</p>
+      <div class="section">
+        <h3>Filter by Department</h3>
+        <select id="dept-filter">
+          <option value="">All Departments</option>
+        </select>
+      </div>
+
+      <div class="section">
+        <h3>Filter by Spend Range</h3>
+        <label>
+          <input type="checkbox" id="filter-small" value="small" checked /> $20k–$100k
+        </label>
+        <label>
+          <input type="checkbox" id="filter-medium" value="medium" checked /> $100k–$500k
+        </label>
+        <label>
+          <input type="checkbox" id="filter-large" value="large" checked /> $500k+
+        </label>
+      </div>
+
+      <div class="section">
+        <h3>Legend</h3>
+        <div class="legend">
+          <div class="legend-item">
+            <span class="legend-circle" style="width: 8px; height: 8px; background: #ffd699;"></span>
+            <span>$20k – $100k</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-circle" style="width: 12px; height: 12px; background: #f5a623;"></span>
+            <span>$100k – $500k</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-circle" style="width: 16px; height: 16px; background: #e67e22;"></span>
+            <span>$500k – $2.5M</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-circle" style="width: 20px; height: 20px; background: #c0392b;"></span>
+            <span>$2.5M+</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="hint">Click a circle to inspect neighborhood details.</p>
     </section>
 
     <section class="map-wrap">
@@ -101,13 +143,23 @@ map.on("load", async () => {
 
     const totalSpend = rows.reduce((sum, row) => sum + Number(row.Total_Spend), 0);
     const totalContracts = rows.reduce(
-      (sum, row) => sum + Number(row.Contract_Count || 0),
+      (sum, row) => sum + Number(row.Project_Count || 0),
       0
     );
 
     document.querySelector("#stat-neighborhoods").textContent = String(rows.length);
     document.querySelector("#stat-total").textContent = formatCurrency(totalSpend);
     document.querySelector("#stat-contracts").textContent = totalContracts.toLocaleString("en-CA");
+
+    // Populate department filter
+    const deptSelect = document.querySelector("#dept-filter");
+    const departments = [...new Set(rows.map(r => r.Top_Department))].sort();
+    departments.forEach(dept => {
+      const opt = document.createElement("option");
+      opt.value = dept;
+      opt.textContent = dept;
+      deptSelect.appendChild(opt);
+    });
 
     const geojson = {
       type: "FeatureCollection",
@@ -122,7 +174,7 @@ map.on("load", async () => {
           properties: {
             neighborhood: row.Neighborhood,
             spend: Number(row.Total_Spend),
-            contracts: Number(row.Contract_Count || 0),
+            contracts: Number(row.Project_Count || 0),
             topDept: row.Top_Department || "Unknown",
           },
           geometry: {
@@ -219,25 +271,48 @@ map.on("load", async () => {
         .addTo(map);
     });
 
-    map.on("click", "spending-clusters", (event) => {
-      const feature = event.features?.[0];
-      if (!feature) return;
-
-      const clusterId = feature.properties.cluster_id;
-      const source = map.getSource("spending");
-
-      source.getClusterExpansionZoom(clusterId, (error, zoom) => {
-        if (error) return;
-        map.easeTo({ center: feature.geometry.coordinates, zoom });
-      });
-    });
-
     map.on("mouseenter", "spending-points", () => {
       map.getCanvas().style.cursor = "pointer";
     });
     map.on("mouseleave", "spending-points", () => {
       map.getCanvas().style.cursor = "";
     });
+
+    // Filter handlers
+    function updateFilters() {
+      const dept = document.querySelector("#dept-filter").value;
+      const small = document.querySelector("#filter-small").checked;
+      const medium = document.querySelector("#filter-medium").checked;
+      const large = document.querySelector("#filter-large").checked;
+
+      let filter = ["all"];
+      if (dept) {
+        filter.push(["==", ["get", "topDept"], dept]);
+      }
+
+      const spendFilters = [];
+      if (small) spendFilters.push(["<=", ["get", "spend"], 100000]);
+      if (medium) spendFilters.push(["all", [">", ["get", "spend"], 100000], ["<=", ["get", "spend"], 500000]]);
+      if (large) spendFilters.push([">", ["get", "spend"], 500000]);
+
+      if (spendFilters.length > 0) {
+        if (spendFilters.length === 1) {
+          filter.push(spendFilters[0]);
+        } else {
+          filter.push(["any", ...spendFilters]);
+        }
+      } else if (!small && !medium && !large) {
+        filter.push(["==", ["get", "spend"], -1]); // Hide all
+      }
+
+      map.setFilter("spending-glow", filter);
+      map.setFilter("spending-points", filter);
+    }
+
+    document.querySelector("#dept-filter").addEventListener("change", updateFilters);
+    document.querySelector("#filter-small").addEventListener("change", updateFilters);
+    document.querySelector("#filter-medium").addEventListener("change", updateFilters);
+    document.querySelector("#filter-large").addEventListener("change", updateFilters);
   } catch (error) {
     console.error(error);
     const panel = document.querySelector(".panel");

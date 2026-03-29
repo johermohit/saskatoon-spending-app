@@ -36,6 +36,8 @@ body,
   border-right: 1px solid var(--line);
   backdrop-filter: blur(4px);
   z-index: 1;
+  overflow-y: auto;
+  max-height: 100vh;
 }
 
 .eyebrow {
@@ -121,6 +123,67 @@ h1 {
   background: rgba(129, 23, 12, 0.3);
   color: #ffd2ca;
   font-size: 0.88rem;
+}
+
+.section {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.section h3 {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.section select,
+.section input[type="checkbox"] {
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+}
+
+.section select {
+  width: 100%;
+}
+
+.section label {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.section input[type="checkbox"] {
+  margin-right: 0.4rem;
+  cursor: pointer;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+.legend-circle {
+  display: inline-block;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 @media (max-width: 900px) {
