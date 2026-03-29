@@ -1,22 +1,29 @@
 # Saskatoon Spending Story
 
-Interactive map application for visualizing City of Saskatoon infrastructure spending by neighborhood using open data only.
+Interactive civic spending application with three views:
+- Neighborhoods (map with project provenance drilldown)
+- Allocation Intelligence (contract analytics)
+- Philosophy (method and mission narrative)
 
 ## What Is Included
 - Vite web app setup for local development and production builds.
-- MapLibre map with scaled spending markers, clustering, and detail popups.
-- Summary KPI panel showing neighborhood count, total spend, and contract totals.
-- Static runtime data loaded from `public/data/summary.json`.
+- MapLibre neighborhood map with click-to-audit details panel.
+- Analytics view powered by CSV-derived datasets (with optional live API fallback).
+- Build-time data pipeline that outputs runtime artifacts under `public/data/`.
 
 ## Project Structure
 - `src/main.js`: App and map logic.
 - `src/styles.css`: UI styling.
-- `public/data/summary.json`: Runtime summary dataset used by the frontend.
-- `data/summary.json`: Source data snapshot (kept for pipeline/reference).
+- `scripts/build-data.mjs`: Data pipeline (summary + analytics artifacts).
+- `public/data/summary.json`: Runtime neighborhood dataset used by the map.
+- `public/data/analytics.json`: Runtime analytics dataset.
+- `data/summary.json`: Enriched neighborhood source with project-level details.
+- `data/Non-Standard.csv`: Contract-level source data.
 
 ## Run Locally
 ```bash
 npm install
+npm run build:data
 npm run dev
 ```
 
@@ -41,9 +48,6 @@ Build output is generated in `dist/`.
 Every push to `main` will trigger an automatic redeploy.
 
 ## Data Notes
-- The app expects each row in `public/data/summary.json` to include:
-	- `Neighborhood`
-	- `Total_Spend`
-	- `Contract_Count`
-	- `Top_Department`
-	- `Coordinates` as `[longitude, latitude]`
+- `npm run build:data` regenerates `public/data/summary.json` and `public/data/analytics.json`.
+- Neighborhood runtime rows use `Project_Count` and may include `Projects` for provenance drilldown.
+- If `public/data/analytics.json` is unavailable, the app attempts a non-blocking live fallback from the City ArcGIS procurement endpoint.

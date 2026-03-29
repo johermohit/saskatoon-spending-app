@@ -1,0 +1,847 @@
+{
+  "generatedAt": "2026-03-29T06:16:49.474Z",
+  "totals": {
+    "Contracts": 686,
+    "Total_Spend": 153851119.49,
+    "Unique_Departments": 64,
+    "Unique_Vendors": 447,
+    "Year_Start": 2019,
+    "Year_End": 2025
+  },
+  "acan": {
+    "Yes_Count": 7,
+    "Yes_Spend": 2293312.1,
+    "No_Count": 679,
+    "No_Spend": 151557807.39
+  },
+  "byDepartment": [
+    {
+      "Department": "IT",
+      "Total_Spend": 30043833.92,
+      "Contract_Count": 55
+    },
+    {
+      "Department": "Water & Waste Operations",
+      "Total_Spend": 19814502.54,
+      "Contract_Count": 23
+    },
+    {
+      "Department": "Saskatoon Water",
+      "Total_Spend": 17158516.91,
+      "Contract_Count": 62
+    },
+    {
+      "Department": "Transit",
+      "Total_Spend": 10477942.84,
+      "Contract_Count": 50
+    },
+    {
+      "Department": "S L & P",
+      "Total_Spend": 7848468.3,
+      "Contract_Count": 35
+    },
+    {
+      "Department": "Recreation & Community Development",
+      "Total_Spend": 6188027.2,
+      "Contract_Count": 8
+    },
+    {
+      "Department": "Saskatoon Light & Power",
+      "Total_Spend": 6120000,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Fleet",
+      "Total_Spend": 5880576.73,
+      "Contract_Count": 53
+    },
+    {
+      "Department": "Solicitors Office",
+      "Total_Spend": 5263298,
+      "Contract_Count": 8
+    },
+    {
+      "Department": "C & D",
+      "Total_Spend": 5023776.68,
+      "Contract_Count": 17
+    },
+    {
+      "Department": "Fire",
+      "Total_Spend": 3969296.33,
+      "Contract_Count": 43
+    },
+    {
+      "Department": "Digital Technology",
+      "Total_Spend": 3232736.01,
+      "Contract_Count": 13
+    },
+    {
+      "Department": "Technical Services",
+      "Total_Spend": 2824436.77,
+      "Contract_Count": 31
+    },
+    {
+      "Department": "Corporate Revenue",
+      "Total_Spend": 2316655.01,
+      "Contract_Count": 21
+    },
+    {
+      "Department": "Transportation",
+      "Total_Spend": 2207904.69,
+      "Contract_Count": 28
+    },
+    {
+      "Department": "Finance",
+      "Total_Spend": 2043683.29,
+      "Contract_Count": 7
+    },
+    {
+      "Department": "WWTP",
+      "Total_Spend": 1675734.27,
+      "Contract_Count": 11
+    },
+    {
+      "Department": "Facilities Management",
+      "Total_Spend": 1582085.7,
+      "Contract_Count": 14
+    },
+    {
+      "Department": "WTP",
+      "Total_Spend": 1464815.28,
+      "Contract_Count": 15
+    },
+    {
+      "Department": "Sustainability",
+      "Total_Spend": 1368100.61,
+      "Contract_Count": 21
+    },
+    {
+      "Department": "Roadways & Support Services",
+      "Total_Spend": 1273801.65,
+      "Contract_Count": 16
+    },
+    {
+      "Department": "City Solicitors",
+      "Total_Spend": 1236260,
+      "Contract_Count": 3
+    },
+    {
+      "Department": "City Soliticor's",
+      "Total_Spend": 1109415,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "Planning & Development",
+      "Total_Spend": 987945.4,
+      "Contract_Count": 8
+    },
+    {
+      "Department": "Facilities - Project Services",
+      "Total_Spend": 834223.14,
+      "Contract_Count": 8
+    },
+    {
+      "Department": "Communications & Public Engagement",
+      "Total_Spend": 829184.67,
+      "Contract_Count": 13
+    },
+    {
+      "Department": "Major Projects & Preservation",
+      "Total_Spend": 815850,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "Community Services",
+      "Total_Spend": 755512.5,
+      "Contract_Count": 3
+    },
+    {
+      "Department": "Community Standards",
+      "Total_Spend": 753290.05,
+      "Contract_Count": 9
+    },
+    {
+      "Department": "Community Standards / Police",
+      "Total_Spend": 750000,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Human Resources",
+      "Total_Spend": 717181.77,
+      "Contract_Count": 15
+    },
+    {
+      "Department": "Corporate Finance (for Fusion)",
+      "Total_Spend": 667500,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "City Clerk's",
+      "Total_Spend": 611076.89,
+      "Contract_Count": 6
+    },
+    {
+      "Department": "Recreation and Community Development",
+      "Total_Spend": 592406.62,
+      "Contract_Count": 9
+    },
+    {
+      "Department": "Fusion",
+      "Total_Spend": 537570,
+      "Contract_Count": 4
+    },
+    {
+      "Department": "Parks",
+      "Total_Spend": 487637.49,
+      "Contract_Count": 9
+    },
+    {
+      "Department": "Purchasing",
+      "Total_Spend": 484542,
+      "Contract_Count": 5
+    },
+    {
+      "Department": "Saskatoon Land",
+      "Total_Spend": 457461.27,
+      "Contract_Count": 7
+    },
+    {
+      "Department": "City Clerks",
+      "Total_Spend": 343305.61,
+      "Contract_Count": 6
+    },
+    {
+      "Department": "SCM - Procurement",
+      "Total_Spend": 299770.9,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "City Clerk",
+      "Total_Spend": 295325.8,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "Forestry Farm Park & Zoo",
+      "Total_Spend": 239300,
+      "Contract_Count": 3
+    },
+    {
+      "Department": "Clerks",
+      "Total_Spend": 228772.5,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "Facilities",
+      "Total_Spend": 215677.22,
+      "Contract_Count": 5
+    },
+    {
+      "Department": "Communications",
+      "Total_Spend": 187831.78,
+      "Contract_Count": 3
+    },
+    {
+      "Department": "Faciltiies - Project Services",
+      "Total_Spend": 169821.95,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "FFP & Zoo",
+      "Total_Spend": 153100,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Major Projects",
+      "Total_Spend": 129995,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "Revenue",
+      "Total_Spend": 127735.5,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Mayor's Office",
+      "Total_Spend": 124800,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Roadways, Fleet and Support Services",
+      "Total_Spend": 108800,
+      "Contract_Count": 3
+    },
+    {
+      "Department": "C & D/MES",
+      "Total_Spend": 104591.12,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "SCM - Operations",
+      "Total_Spend": 97386.21,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Community Standards - Parking",
+      "Total_Spend": 81630,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "City Internal Auditors's Office",
+      "Total_Spend": 75000,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "Organization Strategy Execution",
+      "Total_Spend": 75000,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Organizational Strategy Execution",
+      "Total_Spend": 74550,
+      "Contract_Count": 2
+    },
+    {
+      "Department": "Recreation & Community Dev",
+      "Total_Spend": 70374,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Assessors",
+      "Total_Spend": 56351.42,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Building Standards",
+      "Total_Spend": 47374.93,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Corporate Finance",
+      "Total_Spend": 37746.57,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Clerk's",
+      "Total_Spend": 37560,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "Municipal Engineering",
+      "Total_Spend": 37357.45,
+      "Contract_Count": 1
+    },
+    {
+      "Department": "HR",
+      "Total_Spend": 26712,
+      "Contract_Count": 1
+    }
+  ],
+  "byYear": [
+    {
+      "Year": 2019,
+      "Total_Spend": 8560576.61,
+      "Contract_Count": 77
+    },
+    {
+      "Year": 2020,
+      "Total_Spend": 12716360.06,
+      "Contract_Count": 78
+    },
+    {
+      "Year": 2021,
+      "Total_Spend": 8917189.57,
+      "Contract_Count": 48
+    },
+    {
+      "Year": 2022,
+      "Total_Spend": 15668628.21,
+      "Contract_Count": 84
+    },
+    {
+      "Year": 2023,
+      "Total_Spend": 26740395.16,
+      "Contract_Count": 117
+    },
+    {
+      "Year": 2024,
+      "Total_Spend": 47909668.04,
+      "Contract_Count": 124
+    },
+    {
+      "Year": 2025,
+      "Total_Spend": 33338301.84,
+      "Contract_Count": 158
+    }
+  ],
+  "byReason": [
+    {
+      "Reason_Code": "E",
+      "Total_Spend": 71860329.87,
+      "Contract_Count": 352
+    },
+    {
+      "Reason_Code": "D",
+      "Total_Spend": 44061692.1,
+      "Contract_Count": 200
+    },
+    {
+      "Reason_Code": "C",
+      "Total_Spend": 14320225.13,
+      "Contract_Count": 84
+    },
+    {
+      "Reason_Code": "J",
+      "Total_Spend": 14058455.29,
+      "Contract_Count": 36
+    },
+    {
+      "Reason_Code": "F",
+      "Total_Spend": 10364592.5,
+      "Contract_Count": 64
+    },
+    {
+      "Reason_Code": "A",
+      "Total_Spend": 8438029.09,
+      "Contract_Count": 31
+    },
+    {
+      "Reason_Code": "Unspecified",
+      "Total_Spend": 7634944.65,
+      "Contract_Count": 10
+    },
+    {
+      "Reason_Code": "B",
+      "Total_Spend": 7070933.24,
+      "Contract_Count": 18
+    },
+    {
+      "Reason_Code": "G",
+      "Total_Spend": 4483167.88,
+      "Contract_Count": 25
+    },
+    {
+      "Reason_Code": "K",
+      "Total_Spend": 4084916.13,
+      "Contract_Count": 21
+    },
+    {
+      "Reason_Code": "H",
+      "Total_Spend": 840687.82,
+      "Contract_Count": 14
+    },
+    {
+      "Reason_Code": "I",
+      "Total_Spend": 178500,
+      "Contract_Count": 4
+    }
+  ],
+  "topVendors": [
+    {
+      "Vendor": "Cosmopolitan Industries Ltd.",
+      "Total_Spend": 10479950,
+      "Contract_Count": 2
+    },
+    {
+      "Vendor": "Microsoft Licensing GP",
+      "Total_Spend": 9804978.9,
+      "Contract_Count": 2
+    },
+    {
+      "Vendor": "SAP Canada Inc.",
+      "Total_Spend": 8538845.07,
+      "Contract_Count": 7
+    },
+    {
+      "Vendor": "Loraas Disposal North Ltd.",
+      "Total_Spend": 8383680,
+      "Contract_Count": 4
+    },
+    {
+      "Vendor": "Marsh Canada Ltd.",
+      "Total_Spend": 6774351,
+      "Contract_Count": 16
+    },
+    {
+      "Vendor": "Elster Solutions Canada Inc.",
+      "Total_Spend": 6351013.5,
+      "Contract_Count": 3
+    },
+    {
+      "Vendor": "Wright Construction",
+      "Total_Spend": 4807275,
+      "Contract_Count": 1
+    },
+    {
+      "Vendor": "Motorola Solutions",
+      "Total_Spend": 4229297,
+      "Contract_Count": 2
+    },
+    {
+      "Vendor": "Anthratec Western Inc.",
+      "Total_Spend": 3958700,
+      "Contract_Count": 1
+    },
+    {
+      "Vendor": "Dream Asset Management Corporation",
+      "Total_Spend": 3513147,
+      "Contract_Count": 1
+    },
+    {
+      "Vendor": "Honeywell",
+      "Total_Spend": 3172428.5,
+      "Contract_Count": 2
+    },
+    {
+      "Vendor": "Sask Energy",
+      "Total_Spend": 2507863.65,
+      "Contract_Count": 5
+    },
+    {
+      "Vendor": "Motorola Solutions Canada Inc.",
+      "Total_Spend": 2432102.74,
+      "Contract_Count": 8
+    },
+    {
+      "Vendor": "Cummins Canada ULC",
+      "Total_Spend": 2415000,
+      "Contract_Count": 2
+    },
+    {
+      "Vendor": "Trapeze Software ULC",
+      "Total_Spend": 2259195.3,
+      "Contract_Count": 8
+    }
+  ],
+  "topContracts": [
+    {
+      "Contract_Number": "24-0108",
+      "Department": "Water & Waste Operations",
+      "Vendor": "Cosmopolitan Industries Ltd.",
+      "Description": "Multi Unit Recycling Program",
+      "Year": 2024,
+      "Amount": 10032670,
+      "Reason": "J1",
+      "ACAN": false,
+      "FID": 474
+    },
+    {
+      "Contract_Number": "24-0427",
+      "Department": "IT",
+      "Vendor": "Microsoft Licensing GP",
+      "Description": "Microsoft EA SCE",
+      "Year": 2024,
+      "Amount": 9763161,
+      "Reason": "E1,2,3",
+      "ACAN": false,
+      "FID": 604
+    },
+    {
+      "Contract_Number": "25-0135",
+      "Department": "Saskatoon Light & Power",
+      "Vendor": "Elster Solutions Canada Inc.",
+      "Description": "Supply of Smart Electricity Meters, Communication Modules, Advanced Metering Infrastructure Network Devices and Ongoing Support",
+      "Year": 2025,
+      "Amount": 6120000,
+      "Reason": "D",
+      "ACAN": false,
+      "FID": 414
+    },
+    {
+      "Contract_Number": "24-0085",
+      "Department": "IT",
+      "Vendor": "SAP Canada Inc.",
+      "Description": "SAP S/4 HANA License Renewal",
+      "Year": 2024,
+      "Amount": 6050526,
+      "Reason": "D, E",
+      "ACAN": false,
+      "FID": 468
+    },
+    {
+      "Contract_Number": "23-0528",
+      "Department": "Water & Waste Operations",
+      "Vendor": "Loraas Disposal North Ltd.",
+      "Description": "Loraas Organics Facility",
+      "Year": 2023,
+      "Amount": 5480000,
+      "Reason": "C",
+      "ACAN": false,
+      "FID": 294
+    },
+    {
+      "Contract_Number": "22-0509",
+      "Department": "Recreation & Community Development",
+      "Vendor": "Wright Construction",
+      "Description": "Gordon Howe Sports Complex Upgrades Summary",
+      "Year": 2022,
+      "Amount": 4807275,
+      "Reason": "D",
+      "ACAN": false,
+      "FID": 227
+    },
+    {
+      "Contract_Number": "25-0306",
+      "Department": "Saskatoon Water",
+      "Vendor": "Anthratec Western Inc.",
+      "Description": "Design, Supply and Delivery of Underdrain System",
+      "Year": 2025,
+      "Amount": 3958700,
+      "Reason": "D, a",
+      "ACAN": false,
+      "FID": 547
+    },
+    {
+      "Contract_Number": "24-0484",
+      "Department": "C & D",
+      "Vendor": "Dream Asset Management Corporation",
+      "Description": "Berm Construction and Seeding",
+      "Year": 2024,
+      "Amount": 3513147,
+      "Reason": "Unspecified",
+      "ACAN": false,
+      "FID": 618
+    },
+    {
+      "Contract_Number": "21-0413",
+      "Department": "S L & P",
+      "Vendor": "Honeywell",
+      "Description": "AMI Metering",
+      "Year": 2021,
+      "Amount": 3000000,
+      "Reason": "Unspecified",
+      "ACAN": false,
+      "FID": 146
+    },
+    {
+      "Contract_Number": "23-0336",
+      "Department": "IT",
+      "Vendor": "Motorola Solutions",
+      "Description": "Motorola Maintenance Support and Lifecycle Management",
+      "Year": 2023,
+      "Amount": 2853883,
+      "Reason": "E1",
+      "ACAN": false,
+      "FID": 79
+    },
+    {
+      "Contract_Number": "23-0188",
+      "Department": "Water & Waste Operations",
+      "Vendor": "Loraas Disposal North Ltd.",
+      "Description": "Backup Organics Processing Facility",
+      "Year": 2023,
+      "Amount": 2775000,
+      "Reason": "C",
+      "ACAN": false,
+      "FID": 25
+    },
+    {
+      "Contract_Number": "24-0418",
+      "Department": "IT",
+      "Vendor": "SAP Canada Inc.",
+      "Description": "SAP SF/WFS Licensing",
+      "Year": 2024,
+      "Amount": 2181740,
+      "Reason": "E1, F3",
+      "ACAN": false,
+      "FID": 602
+    },
+    {
+      "Contract_Number": "19-0375",
+      "Department": "IT",
+      "Vendor": "Motorola Solutions Canada Inc.",
+      "Description": "Motorola Radio Support & Upgrade",
+      "Year": 2019,
+      "Amount": 1938303,
+      "Reason": "E",
+      "ACAN": false,
+      "FID": 76
+    },
+    {
+      "Contract_Number": "25-0365",
+      "Department": "Digital Technology",
+      "Vendor": "Vontas",
+      "Description": "Vontas Hardware and Software Maintenance 5 Yr",
+      "Year": 2025,
+      "Amount": 1799399,
+      "Reason": "F3",
+      "ACAN": false,
+      "FID": 572
+    },
+    {
+      "Contract_Number": "25-0103",
+      "Department": "Finance",
+      "Vendor": "TD Global Investment Solutions",
+      "Description": "External Investment Manager",
+      "Year": 2025,
+      "Amount": 1675600,
+      "Reason": "G",
+      "ACAN": false,
+      "FID": 575
+    },
+    {
+      "Contract_Number": "25-0433",
+      "Department": "Transit",
+      "Vendor": "Cummins Canada ULC",
+      "Description": "Cummins Engines",
+      "Year": 2025,
+      "Amount": 1665000,
+      "Reason": "E",
+      "ACAN": false,
+      "FID": 584
+    },
+    {
+      "Contract_Number": "25-0219",
+      "Department": "Saskatoon Water",
+      "Vendor": "Westburne Electric Supply Midwest Div Of Rexel Canada Electrical Inc",
+      "Description": "Saskatoon Water Rockwell Supply",
+      "Year": 2025,
+      "Amount": 1500000,
+      "Reason": "E3",
+      "ACAN": false,
+      "FID": 535
+    },
+    {
+      "Contract_Number": "20-0249",
+      "Department": "Saskatoon Water",
+      "Vendor": "Westburne Electric Supply (Midwest) Div of Rexel Canada Electrical",
+      "Description": "Standing Offer - Rockwell Products",
+      "Year": 2020,
+      "Amount": 1387500,
+      "Reason": "E",
+      "ACAN": false,
+      "FID": 360
+    },
+    {
+      "Contract_Number": "23-0232",
+      "Department": "Fire",
+      "Vendor": "Motorola Solutions",
+      "Description": "Motorola Solutions",
+      "Year": 2023,
+      "Amount": 1375414,
+      "Reason": "E1",
+      "ACAN": false,
+      "FID": 45
+    },
+    {
+      "Contract_Number": "20-0089",
+      "Department": "Transit",
+      "Vendor": "Trapeze Software ULC",
+      "Description": "TransitMaster Software Maintenance",
+      "Year": 2020,
+      "Amount": 1366327,
+      "Reason": "D",
+      "ACAN": false,
+      "FID": 183
+    },
+    {
+      "Contract_Number": "23-0301",
+      "Department": "Solicitors Office",
+      "Vendor": "Marsh Canada Ltd.",
+      "Description": "Property, Boiler and Machinery Insurance",
+      "Year": 2023,
+      "Amount": 1354542,
+      "Reason": "B, E1, K",
+      "ACAN": false,
+      "FID": 73
+    },
+    {
+      "Contract_Number": "20-0095",
+      "Department": "S L & P",
+      "Vendor": "Orrocal Enterprises Inc",
+      "Description": "Landfill Gas Generator Maintenance",
+      "Year": 2020,
+      "Amount": 1350000,
+      "Reason": "A",
+      "ACAN": false,
+      "FID": 186
+    },
+    {
+      "Contract_Number": "24-0274",
+      "Department": "IT",
+      "Vendor": "Esri Canada Ltd.",
+      "Description": "GIS Software",
+      "Year": 2024,
+      "Amount": 1335000,
+      "Reason": "E1",
+      "ACAN": false,
+      "FID": 517
+    },
+    {
+      "Contract_Number": "25-0107",
+      "Department": "Solicitors Office",
+      "Vendor": "Marsh Canada Ltd.",
+      "Description": "Insurance Premiums 2025",
+      "Year": 2025,
+      "Amount": 1112282,
+      "Reason": "G1",
+      "ACAN": false,
+      "FID": 421
+    },
+    {
+      "Contract_Number": "23-0141",
+      "Department": "Solicitors Office",
+      "Vendor": "Marsh Canada Ltd.",
+      "Description": "Insurance Premiums for 2023",
+      "Year": 2023,
+      "Amount": 1079739,
+      "Reason": "B, E1, K",
+      "ACAN": false,
+      "FID": 249
+    },
+    {
+      "Contract_Number": "22-0221",
+      "Department": "S L & P",
+      "Vendor": "ABB Electrification Canada",
+      "Description": "Moulded Vacuum Interrupters",
+      "Year": 2022,
+      "Amount": 1061640,
+      "Reason": "D",
+      "ACAN": false,
+      "FID": 332
+    },
+    {
+      "Contract_Number": "22-0099",
+      "Department": "City Soliticor's",
+      "Vendor": "March Canada Ltd.",
+      "Description": "Insurance Premiums for the City's 9 Policies",
+      "Year": 2022,
+      "Amount": 1019947,
+      "Reason": "B",
+      "ACAN": false,
+      "FID": 315
+    },
+    {
+      "Contract_Number": "24-0134",
+      "Department": "Corporate Revenue",
+      "Vendor": "Moneris",
+      "Description": "Payment Processing Services",
+      "Year": 2024,
+      "Amount": 1000000,
+      "Reason": "D",
+      "ACAN": false,
+      "FID": 482
+    },
+    {
+      "Contract_Number": "25-0469",
+      "Department": "WWTP",
+      "Vendor": "Xylem Canada Co",
+      "Description": "Supply and Delivery of Flygt Products (Pumps and Parts)",
+      "Year": 2025,
+      "Amount": 990000,
+      "Reason": "E",
+      "ACAN": false,
+      "FID": 639
+    },
+    {
+      "Contract_Number": "24-0299",
+      "Department": "Saskatoon Water",
+      "Vendor": "Delco Automation Inc.",
+      "Description": "Filtralite Replacement",
+      "Year": 2024,
+      "Amount": 929102,
+      "Reason": "E2",
+      "ACAN": false,
+      "FID": 464
+    }
+  ]
+}

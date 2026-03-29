@@ -1,7 +1,7 @@
 [
   {
     "Neighborhood": "Avalon",
-    "Total_Spend": 166860.0,
+    "Total_Spend": 166860,
     "Project_Count": 1,
     "Top_Department": "Transit",
     "Context": "Infrastructure maintenance and local improvements.",
@@ -9,6 +9,14 @@
     "Coordinates": [
       -106.64,
       52.098
+    ],
+    "Projects": [
+      {
+        "Vendor": "Transit.",
+        "Amount": 166860,
+        "Description": "Transit Royale App",
+        "Policy_Reason": "Compatibility/Standardization (Match existing equipment/software)"
+      }
     ]
   },
   {
@@ -21,11 +29,19 @@
     "Coordinates": [
       -106.615,
       52.11
+    ],
+    "Projects": [
+      {
+        "Vendor": "Elster Solutions Canada",
+        "Amount": 123315.2,
+        "Description": "NS Yearly Maintenance for AMI Head End",
+        "Policy_Reason": "Emergency (Urgent health/safety/environmental)"
+      }
     ]
   },
   {
     "Neighborhood": "CN Industrial",
-    "Total_Spend": 585000.0,
+    "Total_Spend": 585000,
     "Project_Count": 4,
     "Top_Department": "Fleet",
     "Context": "The project scope includes, but is not limited to, drainage ditch construction, culvert installation, road reconstruction and/or any related road structure ...",
@@ -33,6 +49,32 @@
     "Coordinates": [
       -106.645,
       52.095
+    ],
+    "Projects": [
+      {
+        "Vendor": "Bell International Trucks Ltd.",
+        "Amount": 130000,
+        "Description": "Bell International Branded Parts and Service",
+        "Policy_Reason": "Emergency (Unforeseen critical need)"
+      },
+      {
+        "Vendor": "Bell International Trucks Ltd.",
+        "Amount": 130000,
+        "Description": "International Branded Parts and Service",
+        "Policy_Reason": "Emergency (Unforeseen critical need)"
+      },
+      {
+        "Vendor": "Fer-Marc Equipment Ltd.",
+        "Amount": 150000,
+        "Description": "Elgin and Vactor Branded Equipment Parts and Service",
+        "Policy_Reason": "Emergency (Unforeseen critical need)"
+      },
+      {
+        "Vendor": "Redhead Equipment",
+        "Amount": 175000,
+        "Description": "Heavy Equipment Parts & Services for Mack, Volvo and Case Brands",
+        "Policy_Reason": "Emergency (Unforeseen critical need)"
+      }
     ]
   },
   {
@@ -45,6 +87,14 @@
     "Coordinates": [
       -106.59,
       52.125
+    ],
+    "Projects": [
+      {
+        "Vendor": "United Rentals",
+        "Amount": 173045.8,
+        "Description": "Generator Rental - Acadia",
+        "Policy_Reason": "Sole Source (Only one capable supplier)"
+      }
     ]
   },
   {
@@ -57,6 +107,14 @@
     "Coordinates": [
       -106.57,
       52.12
+    ],
+    "Projects": [
+      {
+        "Vendor": "Western Information Management Inc.",
+        "Amount": 37560.1,
+        "Description": "Software Licensing/Maintenance for WISPIR and WesternIM",
+        "Policy_Reason": "Other Policy Exception (F3)"
+      }
     ]
   },
   {
@@ -69,6 +127,14 @@
     "Coordinates": [
       -106.72,
       52.145
+    ],
+    "Projects": [
+      {
+        "Vendor": "Spartan Controls Ltd.",
+        "Amount": 29540.43,
+        "Description": "Fisher ET Control Valve",
+        "Policy_Reason": "Emergency (Unforeseen critical need)"
+      }
     ]
   },
   {
@@ -81,6 +147,20 @@
     "Coordinates": [
       -106.662,
       52.128
+    ],
+    "Projects": [
+      {
+        "Vendor": "Canadian Pacific Railway Company",
+        "Amount": 233869.5,
+        "Description": "Canadian Pacific Kansas City Rail Crossing Upgrades",
+        "Policy_Reason": "Other Policy Exception (E3)"
+      },
+      {
+        "Vendor": "Henry Downing Architects",
+        "Amount": 34060,
+        "Description": "Consulting Services - 210 Pacific Avenue",
+        "Policy_Reason": "Sole Source (Only one capable supplier)"
+      }
     ]
   },
   {
@@ -93,6 +173,14 @@
     "Coordinates": [
       -106.73,
       52.15
+    ],
+    "Projects": [
+      {
+        "Vendor": "Brunners Construction Ltd",
+        "Amount": 42229.95,
+        "Description": "Replace Valve on Main Drain Line at George Ward Pool",
+        "Policy_Reason": "Compatibility/Standardization (Match existing equipment/software)"
+      }
     ]
   },
   {
@@ -105,6 +193,14 @@
     "Coordinates": [
       -106.6702,
       52.1332
+    ],
+    "Projects": [
+      {
+        "Vendor": "Rogers Wireless (Shaw Cablesystem GP)",
+        "Amount": 70966.8,
+        "Description": "Shaw (Rogers) CN Industrial",
+        "Policy_Reason": "Other Policy Exception (E3)"
+      }
     ]
   },
   {
@@ -117,6 +213,14 @@
     "Coordinates": [
       -106.72,
       52.12
+    ],
+    "Projects": [
+      {
+        "Vendor": "Spartan Controls",
+        "Amount": 195496.6,
+        "Description": "Saskatoon Water - Keystone Influent and Effluent Valves - ACAN",
+        "Policy_Reason": "Emergency (Urgent health/safety/environmental)"
+      }
     ]
   },
   {
@@ -129,11 +233,19 @@
     "Coordinates": [
       -106.6702,
       52.1332
+    ],
+    "Projects": [
+      {
+        "Vendor": "SurveyMonkey Europe",
+        "Amount": 28426.8,
+        "Description": "Grant Management System",
+        "Policy_Reason": "Emergency (Urgent health/safety/environmental)"
+      }
     ]
   },
   {
     "Neighborhood": "Haultain",
-    "Total_Spend": 100000.0,
+    "Total_Spend": 100000,
     "Project_Count": 1,
     "Top_Department": "Recreation & Community Development",
     "Context": "Infrastructure maintenance and local improvements.",
@@ -141,11 +253,19 @@
     "Coordinates": [
       -106.6702,
       52.1332
+    ],
+    "Projects": [
+      {
+        "Vendor": "Gordie Howe Sports Complex",
+        "Amount": 100000,
+        "Description": "Clarence Downey Speedskating Oval Operation",
+        "Policy_Reason": "Other Policy Exception (K)"
+      }
     ]
   },
   {
     "Neighborhood": "Hillcrest Management Area",
-    "Total_Spend": 66150.0,
+    "Total_Spend": 66150,
     "Project_Count": 1,
     "Top_Department": "Technical Services",
     "Context": "Infrastructure maintenance and local improvements.",
@@ -153,6 +273,14 @@
     "Coordinates": [
       -106.6702,
       52.1332
+    ],
+    "Projects": [
+      {
+        "Vendor": "Top Shot Concrete Systems",
+        "Amount": 66150,
+        "Description": "NS Taylor Street Crumpled Steel Liner Removal from Storm Pipe",
+        "Policy_Reason": "Emergency (Urgent health/safety/environmental)"
+      }
     ]
   },
   {
@@ -165,11 +293,25 @@
     "Coordinates": [
       -106.65,
       52.17
+    ],
+    "Projects": [
+      {
+        "Vendor": "SCS Contracting Ltd.",
+        "Amount": 89545,
+        "Description": "CN Millar Avenue Crossing Upgrade",
+        "Policy_Reason": "Other Policy Exception (C, E1)"
+      },
+      {
+        "Vendor": "ATS Traffic Ltd.",
+        "Amount": 28387.51,
+        "Description": "Circle Drive Guardrail Repairs",
+        "Policy_Reason": "Emergency (Urgent health/safety/environmental)"
+      }
     ]
   },
   {
     "Neighborhood": "Nutana",
-    "Total_Spend": 40590.0,
+    "Total_Spend": 40590,
     "Project_Count": 1,
     "Top_Department": "Human Resources",
     "Context": "Infrastructure maintenance and local improvements.",
@@ -177,6 +319,14 @@
     "Coordinates": [
       -106.6702,
       52.1332
+    ],
+    "Projects": [
+      {
+        "Vendor": "Saskatchewan Safety Council",
+        "Amount": 40590,
+        "Description": "52nd Saskatchewan Safety Seminar",
+        "Policy_Reason": "Other Policy Exception (D, J)"
+      }
     ]
   },
   {
@@ -189,11 +339,25 @@
     "Coordinates": [
       -106.74,
       52.135
+    ],
+    "Projects": [
+      {
+        "Vendor": "Viterra Canada Inc.",
+        "Amount": 100000,
+        "Description": "Crossing Upgrades Fairlight Dr. at Viterra Crossing",
+        "Policy_Reason": "Other Policy Exception (E3)"
+      },
+      {
+        "Vendor": "Canadian Pacific Railway Company",
+        "Amount": 44750.46,
+        "Description": "Canadian Pacific Kansas City Rail Fairlight Dr. Crossing Upgrade",
+        "Policy_Reason": "Other Policy Exception (E3)"
+      }
     ]
   },
   {
     "Neighborhood": "River Heights",
-    "Total_Spend": 31850.0,
+    "Total_Spend": 31850,
     "Project_Count": 1,
     "Top_Department": "C & D",
     "Context": "Infrastructure maintenance and local improvements.",
@@ -201,6 +365,14 @@
     "Coordinates": [
       -106.6702,
       52.1332
+    ],
+    "Projects": [
+      {
+        "Vendor": "BBK Engineering",
+        "Amount": 31850,
+        "Description": "Assiniboine Crossing Retaining Walls",
+        "Policy_Reason": "No Responsive Bids (Competitive process failed)"
+      }
     ]
   },
   {
@@ -213,11 +385,37 @@
     "Coordinates": [
       -106.675,
       52.122
+    ],
+    "Projects": [
+      {
+        "Vendor": "Shermco Industries Canada Inc",
+        "Amount": 28102.31,
+        "Description": "Degasification of Transformer at Ave C Substation",
+        "Policy_Reason": "Sole Source (Only one capable supplier)"
+      },
+      {
+        "Vendor": "Canadian Pacific Railway",
+        "Amount": 162673,
+        "Description": "CPR Ave I Rail Crossing",
+        "Policy_Reason": "Other Policy Exception (E3)"
+      },
+      {
+        "Vendor": "Canadian Pacific Railway Co",
+        "Amount": 28521.87,
+        "Description": "Warning System Repair at Ave I",
+        "Policy_Reason": "Emergency (Unforeseen critical need)"
+      },
+      {
+        "Vendor": "ICR Property Management",
+        "Amount": 195599.5,
+        "Description": "325 Ave C Warmup Renovation",
+        "Policy_Reason": "Sole Source (Only one capable supplier)"
+      }
     ]
   },
   {
     "Neighborhood": "Rosewood",
-    "Total_Spend": 151661.58,
+    "Total_Spend": 151661.58000000002,
     "Project_Count": 2,
     "Top_Department": "Saskatoon Water",
     "Context": "Infrastructure maintenance and local improvements.",
@@ -225,6 +423,20 @@
     "Coordinates": [
       -106.575,
       52.085
+    ],
+    "Projects": [
+      {
+        "Vendor": "Don Wehage and Sons Trucking and Excavating Ltd",
+        "Amount": 76661.58,
+        "Description": "Rosewood Pond Sediment Removal",
+        "Policy_Reason": "Other Policy Exception (A, E1, G1)"
+      },
+      {
+        "Vendor": "OnPurpose Leadership Inc.",
+        "Amount": 75000,
+        "Description": "Gather Local Market Interim Operations",
+        "Policy_Reason": "Sole Source (Only one capable supplier)"
+      }
     ]
   },
   {
@@ -237,11 +449,49 @@
     "Coordinates": [
       -106.64,
       52.15
+    ],
+    "Projects": [
+      {
+        "Vendor": "Westburne Electric Supply (Midwest)",
+        "Amount": 29327.6,
+        "Description": "Allen Bradley Powerflex 753 Variable Frequency Drives and Parts",
+        "Policy_Reason": "Other Policy Exception (E3)"
+      },
+      {
+        "Vendor": "SaskPower",
+        "Amount": 54000,
+        "Description": "SaskPower S/I 3PH Transformer",
+        "Policy_Reason": "Other Policy Exception (D, E3)"
+      },
+      {
+        "Vendor": "SaskPower",
+        "Amount": 59882.28,
+        "Description": "SaskPower New Electrical Service Installation at New Fire Station No. 5",
+        "Policy_Reason": "Other Policy Exception (E3, J1)"
+      },
+      {
+        "Vendor": "SaskPower",
+        "Amount": 28888,
+        "Description": "Padount Transformers from SaskPower",
+        "Policy_Reason": "Sole Source (Only one capable supplier)"
+      },
+      {
+        "Vendor": "Integrated Power Services Inc.",
+        "Amount": 68609,
+        "Description": "Supply of Toshiba 5KV VFD Power Module",
+        "Policy_Reason": "Other Policy Exception (D / E)"
+      },
+      {
+        "Vendor": "SaskPower",
+        "Amount": 48752.37,
+        "Description": "SaskPower Work",
+        "Policy_Reason": "Other Policy Exception (E3)"
+      }
     ]
   },
   {
     "Neighborhood": "Stonebridge",
-    "Total_Spend": 5072267.0,
+    "Total_Spend": 5072267,
     "Project_Count": 3,
     "Top_Department": "Recreation & Community Development",
     "Context": "In June 2024, City Council approved amendments to the Corridor Land Use and Corridor Growth Boundary areas throughout the city. The subject site is within ...",
@@ -249,6 +499,26 @@
     "Coordinates": [
       -106.6231,
       52.0886
+    ],
+    "Projects": [
+      {
+        "Vendor": "Amanda Klassen",
+        "Amount": 96000,
+        "Description": "Gordon Howe Campground Manager",
+        "Policy_Reason": "No Responsive Bids (Competitive process failed)"
+      },
+      {
+        "Vendor": "Wright Construction",
+        "Amount": 4807275,
+        "Description": "Gordon Howe Sports Complex Upgrades Summary",
+        "Policy_Reason": "Compatibility/Standardization (Match existing equipment/software)"
+      },
+      {
+        "Vendor": "F3 Recreation",
+        "Amount": 168992,
+        "Description": "Contract Manager- Gordon Howe Campground",
+        "Policy_Reason": "No Responsive Bids (Competitive process failed)"
+      }
     ]
   },
   {
@@ -261,6 +531,20 @@
     "Coordinates": [
       -106.62,
       52.14
+    ],
+    "Projects": [
+      {
+        "Vendor": "University of Saskatchewan",
+        "Amount": 29800,
+        "Description": "U of S Ground Work for Field House",
+        "Policy_Reason": "Other Policy Exception (nan)"
+      },
+      {
+        "Vendor": "Tundra Process Solutions Ltd.",
+        "Amount": 50416.2,
+        "Description": "Digester Building & North 40 Gas Detection Equipment",
+        "Policy_Reason": "Emergency (Urgent health/safety/environmental)"
+      }
     ]
   },
   {
@@ -273,6 +557,14 @@
     "Coordinates": [
       -106.7,
       52.09
+    ],
+    "Projects": [
+      {
+        "Vendor": "Superior Sweeping Services Inc. o/a Precision Asphalt",
+        "Amount": 78487.02,
+        "Description": "New Pathway and Pave Roadway into Satellite Yard",
+        "Policy_Reason": "Sole Source (Only one capable supplier)"
+      }
     ]
   }
 ]
