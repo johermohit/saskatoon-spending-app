@@ -368,6 +368,19 @@ async function buildAnalytics() {
         ACAN: record.acan,
         FID: record.fid,
       })),
+    allContracts: [...validRecords]
+      .sort((a, b) => b.amount - a.amount)
+      .map((record) => ({
+        Contract_Number: record.contractNumber,
+        Department: record.department,
+        Vendor: record.vendor,
+        Description: record.description,
+        Year: record.year,
+        Amount: Number(record.amount.toFixed(2)),
+        Reason: record.reasonRaw,
+        ACAN: record.acan,
+        FID: record.fid,
+      })),
   };
 
   await fs.writeFile(analyticsPath, `${JSON.stringify(payload, null, 2)}\n`, "utf8");

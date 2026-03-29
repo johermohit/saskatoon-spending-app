@@ -73,8 +73,8 @@ app.innerHTML = `
         <p class="eyebrow">Procurement Signal Desk</p>
         <h1 class="title">Spending Signals</h1>
         <p class="lead">
-          A time-aware read of procurement: where spending concentrated, why exceptions were used,
-          and what that means for public accountability.
+          A practical read of the full non-standard ledger: where pressure is concentrated,
+          why exceptions appear, and who receives the largest contracts.
         </p>
       </section>
     </section>
@@ -88,33 +88,27 @@ app.innerHTML = `
           This project turns hard-to-read records into a clear civic map anyone can use.
         </p>
         <blockquote class="philosophy-quote">"Accountability starts when people can actually read the data."</blockquote>
-        <article class="philosophy-card">
-          <h2>Principle 1: Start With Place</h2>
+        <div class="principles-grid">
+          <article class="philosophy-card">
+            <h2>Principle 1: Start With Place</h2>
+            <p>
+              We begin with neighborhoods because people think in places they know.
+              Clicking a marker should answer one practical question: what happened here?
+            </p>
+          </article>
+          <article class="philosophy-card">
+            <h2>Principle 2: Show Receipts, Not Just Totals</h2>
+            <p>
+              Every high-level number should lead to vendor, amount, and decision reason.
+              This is a civic ledger designed for inspection, challenge, and trust.
+            </p>
+          </article>
+        </div>
+        <article class="philosophy-card credit-card">
+          <h2>Built By</h2>
           <p>
-            We begin with neighborhoods because people think in places they know.
-            Clicking a marker should answer one practical question: what happened here?
-          </p>
-        </article>
-        <article class="philosophy-card">
-          <h2>Principle 2: Show Receipts, Not Just Totals</h2>
-          <p>
-            Every high-level number should lead to vendor, amount, and decision reason.
-            That makes this a public ledger people can inspect, question, and trust.
-          </p>
-        </article>
-        <article class="philosophy-card">
-          <h2>Principle 3: Explain Exceptions Clearly</h2>
-          <p>
-            Non-standard procurement is sometimes necessary. What matters is clarity:
-            when exceptions are used, where they are concentrated, and how that changes over time.
-          </p>
-        </article>
-        <article class="philosophy-card">
-          <h2>Our Manifesto</h2>
-          <p>
-            Every resident deserves to see where city money goes. Plain language, strong contrast,
-            and simple controls are not cosmetic choices; they are access choices that invite more
-            people into civic oversight.
+            Mohit Joshi · <a href="https://linkedin.com/in/hellomohit" target="_blank" rel="noreferrer">linkedin.com/in/hellomohit</a>
+            · <a href="https://makewithmohit.com" target="_blank" rel="noreferrer">makewithmohit.com</a>
           </p>
         </article>
       </section>
@@ -410,6 +404,19 @@ function buildAnalyticsPayload(rawRecords) {
       Amount: row.amount,
     }));
 
+  const allContracts = [...records]
+    .sort((a, b) => b.amount - a.amount)
+    .map((row) => ({
+      Contract_Number: row.contract,
+      Department: row.department,
+      Vendor: row.vendor,
+      Description: row.description,
+      Year: Number.isFinite(row.year) ? row.year : "Unknown",
+      Amount: row.amount,
+      Reason: row.reason,
+      ACAN: row.acan,
+    }));
+
   const acanYes = records.filter((row) => row.acan);
   const acanNo = records.filter((row) => !row.acan);
 
@@ -454,6 +461,7 @@ function buildAnalyticsPayload(rawRecords) {
     byReason,
     topVendors,
     topContracts,
+    allContracts,
   };
 }
 
@@ -738,13 +746,6 @@ function renderAnalytics(analytics, reasonCatalog) {
     }).length,
   };
 
-  const signalBullets = [
-    `${signals.unknownReasonContracts.toLocaleString("en-CA")} contracts are missing reason-code detail (${formatCurrency(signals.unknownReasonSpend)}).`,
-    `Top two vendors represent ${Number(signals.topTwoVendorSharePct || 0).toFixed(1)}% of total spend.`,
-    `${signals.namingVariantsCount.toLocaleString("en-CA")} department name variants include clerk, solicitor, or recreation wording.`,
-    `${formatCurrency(signals.clerkNameVarianceSpend)} is currently grouped under clerk-related department naming variants.`,
-  ];
-
   const yearRowsSource = Array.isArray(analytics.byYear) ? analytics.byYear : [];
   const maxYearSpend = Math.max(...yearRowsSource.map((item) => item.Total_Spend), 1);
 
@@ -762,40 +763,112 @@ function renderAnalytics(analytics, reasonCatalog) {
     { Year: null, Total_Spend: 0, Contract_Count: 0 }
   );
 
+  const fullContracts = (Array.isArray(analytics.allContracts) && analytics.allContracts.length > 0
+    ? analytics.allContracts
+    : analytics.topContracts || []).map((row) => {
+      const reasonCode = parseReasonCodes(row.Reason || "")[0] || "Unspecified";
+      return {
+        Contract_Number: row.Contract_Number || "Unknown",
+        Department: row.Department || "Unknown",
+        Vendor: row.Vendor || "Unknown",
+        Description: row.Description || "Not provided",
+        Year: Number.isFinite(Number(row.Year)) ? Number(row.Year) : "Unknown",
+        Amount: Number(row.Amount || 0),
+        Reason: row.Reason || "Unspecified",
+        ACAN: Boolean(row.ACAN),
+        reasonCode,
+        reasonLabel: getReasonLabel(reasonCode, reasonCatalog),
+      };
+    });
+
+  const topVendor = analytics.topVendors?.[0];
+  const secondVendor = analytics.topVendors?.[1];
+
+  const storyCards = [
+    {
+      title: "Concentration",
+      value: `${Number(signals.topTwoVendorSharePct || 0).toFixed(1)}%`,
+      note: "of total spend is concentrated in the top two vendors.",
+    },
+    {
+      title: "Data Gaps",
+      value: `${signals.unknownReasonContracts.toLocaleString("en-CA")} rows`,
+      note: `have missing reason detail (${formatCurrency(signals.unknownReasonSpend)}).`,
+    },
+    {
+      title: "Naming Drift",
+      value: `${signals.namingVariantsCount.toLocaleString("en-CA")} variants`,
+      note: "department labels include clerk/solicitor/recreation variations.",
+    },
+  ];
+
+  const fieldNotes = [
+    `${analytics.totals.Contracts.toLocaleString("en-CA")} records are visible in the full ledger below.`,
+    topVendor
+      ? `Largest vendor: ${escapeHtml(topVendor.Vendor)} at ${formatCurrency(topVendor.Total_Spend)}.`
+      : "Largest vendor insight unavailable.",
+    secondVendor
+      ? `Second largest vendor: ${escapeHtml(secondVendor.Vendor)} at ${formatCurrency(secondVendor.Total_Spend)}.`
+      : "Second vendor insight unavailable.",
+    `Peak annual spend is ${formatCurrency(peakYear.Total_Spend || 0)} in ${peakYear.Year || "-"}.`,
+  ];
+
+  const departmentRecords = new Map();
+  fullContracts.forEach((row) => {
+    if (!departmentRecords.has(row.Department)) {
+      departmentRecords.set(row.Department, []);
+    }
+    departmentRecords.get(row.Department).push(row);
+  });
+
   const deptCards = analytics.byDepartment.slice(0, 9).map(
-    (item, index) => `
+    (item, index) => {
+      const deptRows = departmentRecords.get(item.Department) || [];
+      const topDeptVendor = aggregateRows(deptRows, (row) => row.Vendor, (row) => row.Amount)
+        .sort((a, b) => b.spend - a.spend)[0];
+      const topDeptReason = aggregateRows(deptRows, (row) => row.reasonCode, (row) => row.Amount)
+        .sort((a, b) => b.spend - a.spend)[0];
+      const latestYear = deptRows
+        .map((row) => Number(row.Year))
+        .filter((year) => Number.isFinite(year))
+        .sort((a, b) => b - a)[0];
+
+      return `
       <article class="insight-card">
         <span class="insight-rank">#${index + 1}</span>
         <h3>${escapeHtml(item.Department)}</h3>
         <p>${formatCurrency(item.Total_Spend)}</p>
         <small>${item.Contract_Count.toLocaleString("en-CA")} contracts · ${((item.Total_Spend / totalSpend) * 100).toFixed(1)}% share</small>
+        <div class="capsule-row">
+          <span class="capsule">Top vendor: ${escapeHtml(topDeptVendor?.key || "Unknown")}</span>
+          <span class="capsule">Top reason: ${escapeHtml(topDeptReason?.key || "Unspecified")}</span>
+          <span class="capsule">Latest year: ${latestYear || "-"}</span>
+        </div>
       </article>
-    `
+    `;
+    }
   ).join("");
 
-  const reasonMosaic = analytics.byReason.slice(0, 10).map(
-    (item) => `
-      <article class="reason-chip">
-        <h3>${escapeHtml(item.Reason_Code)}</h3>
+  const reasonRows = analytics.byReason.slice(0, 8).map((item) => {
+    const relatedRows = fullContracts.filter((row) => row.reasonCode === item.Reason_Code);
+    const topReasonDept = aggregateRows(relatedRows, (row) => row.Department, (row) => row.Amount)
+      .sort((a, b) => b.spend - a.spend)[0];
+
+    return `
+      <article class="reason-card">
+        <div class="reason-card-top">
+          <h3>${escapeHtml(item.Reason_Code)}</h3>
+          <strong>${formatCurrency(item.Total_Spend)}</strong>
+        </div>
         <p>${escapeHtml(getReasonLabel(item.Reason_Code, reasonCatalog))}</p>
-        <strong>${formatCurrency(item.Total_Spend)}</strong>
+        <div class="reason-meta">
+          <span>${item.Contract_Count.toLocaleString("en-CA")} contracts</span>
+          <span>${((item.Total_Spend / totalSpend) * 100).toFixed(1)}% spend share</span>
+          <span>Most seen in: ${escapeHtml(topReasonDept?.key || "Unknown")}</span>
+        </div>
       </article>
-    `
-  ).join("");
-
-  const topVendor = analytics.topVendors?.[0];
-  const secondVendor = analytics.topVendors?.[1];
-
-  const fieldNotes = [
-    `${analytics.totals.Contracts.toLocaleString("en-CA")} non-standard records are included in this view.`,
-    topVendor
-      ? `${escapeHtml(topVendor.Vendor)} is the largest single vendor at ${formatCurrency(topVendor.Total_Spend)}.`
-      : "Top-vendor insight unavailable.",
-    secondVendor
-      ? `Second place is ${escapeHtml(secondVendor.Vendor)} at ${formatCurrency(secondVendor.Total_Spend)}.`
-      : "Second-vendor insight unavailable.",
-    `The data spans ${firstYear || "-"} to ${lastYear || "-"}, with peak spend in ${peakYear.Year || "-"}.`,
-  ];
+    `;
+  }).join("");
 
   const yearlyRows = yearRowsSource.map(
     (item) => `
@@ -808,7 +881,7 @@ function renderAnalytics(analytics, reasonCatalog) {
     `
   ).join("");
 
-  const topContracts = analytics.topContracts.slice(0, 10).map(
+  const topContracts = analytics.topContracts.slice(0, 12).map(
     (contract) => `
       <tr>
         <td>${escapeHtml(contract.Contract_Number)}</td>
@@ -816,6 +889,7 @@ function renderAnalytics(analytics, reasonCatalog) {
         <td>${escapeHtml(contract.Vendor)}</td>
         <td>${formatCurrency(contract.Amount)}</td>
         <td>${escapeHtml(String(contract.Year))}</td>
+        <td>${escapeHtml(parseReasonCodes(contract.Reason || "")[0] || "Unspecified")}</td>
       </tr>
     `
   ).join("");
@@ -829,10 +903,20 @@ function renderAnalytics(analytics, reasonCatalog) {
     </div>
 
     <section class="analytics-card">
-      <h2>Read Before Conclusions</h2>
-      <ul class="signal-bullets">
-        ${signalBullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-      </ul>
+      <h2>Signal Snapshot</h2>
+      <div class="story-strip">
+        ${storyCards
+          .map(
+            (card) => `
+              <article class="story-card">
+                <span>${escapeHtml(card.title)}</span>
+                <strong>${escapeHtml(card.value)}</strong>
+                <p>${escapeHtml(card.note)}</p>
+              </article>
+            `
+          )
+          .join("")}
+      </div>
     </section>
 
     <section class="analytics-card">
@@ -873,21 +957,211 @@ function renderAnalytics(analytics, reasonCatalog) {
     </section>
 
     <section class="analytics-card">
-      <h2>Why Exceptions Were Used</h2>
-      <p class="section-copy">Codes and plain-language reasons with total spend intensity.</p>
-      <div class="reason-mosaic">${reasonMosaic}</div>
+      <h2>Exception Pressure Map</h2>
+      <p class="section-copy">What each reason code means, how much money flows through it, and which department drives it most.</p>
+      <div class="reason-grid">${reasonRows}</div>
     </section>
 
     <section class="analytics-card">
       <h2>Top Contracts</h2>
       <div class="table-scroll">
         <table class="contracts-table">
-          <thead><tr><th>Contract</th><th>Department</th><th>Vendor</th><th>Amount</th><th>Year</th></tr></thead>
+          <thead><tr><th>Contract</th><th>Department</th><th>Vendor</th><th>Amount</th><th>Year</th><th>Reason</th></tr></thead>
           <tbody>${topContracts}</tbody>
         </table>
       </div>
     </section>
+
+    <section class="analytics-card">
+      <h2>Full Contract Ledger</h2>
+      <p class="section-copy">All rows from the CSV. Search, sort, and group to inspect patterns from different angles.</p>
+      <div class="ledger-toolbar">
+        <input id="ledger-search" type="search" placeholder="Search contract, vendor, department, reason..." />
+        <select id="ledger-group">
+          <option value="none">No Grouping</option>
+          <option value="department">Group by Department</option>
+          <option value="reason">Group by Reason</option>
+          <option value="year">Group by Year</option>
+          <option value="vendor">Group by Vendor</option>
+        </select>
+        <select id="ledger-sort">
+          <option value="amount-desc">Sort: Amount High to Low</option>
+          <option value="amount-asc">Sort: Amount Low to High</option>
+          <option value="year-desc">Sort: Newest Year</option>
+          <option value="year-asc">Sort: Oldest Year</option>
+          <option value="vendor-asc">Sort: Vendor A-Z</option>
+        </select>
+      </div>
+      <p class="ledger-summary" id="ledger-summary"></p>
+      <div class="table-scroll">
+        <table class="contracts-table ledger-table">
+          <thead>
+            <tr>
+              <th>Contract</th>
+              <th>Department</th>
+              <th>Vendor</th>
+              <th>Reason</th>
+              <th>Amount</th>
+              <th>Year</th>
+              <th>ACAN</th>
+            </tr>
+          </thead>
+          <tbody id="ledger-body"></tbody>
+        </table>
+      </div>
+    </section>
   `;
+
+  const ledgerBody = root.querySelector("#ledger-body");
+  const ledgerSummary = root.querySelector("#ledger-summary");
+  const ledgerSearch = root.querySelector("#ledger-search");
+  const ledgerGroup = root.querySelector("#ledger-group");
+  const ledgerSort = root.querySelector("#ledger-sort");
+
+  const ledgerState = {
+    search: "",
+    group: "none",
+    sort: "amount-desc",
+  };
+
+  function sortRows(rows, mode) {
+    const sorted = [...rows];
+    const yearValue = (value) => {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : -1;
+    };
+
+    if (mode === "amount-asc") {
+      sorted.sort((a, b) => a.Amount - b.Amount);
+    } else if (mode === "year-desc") {
+      sorted.sort((a, b) => yearValue(b.Year) - yearValue(a.Year));
+    } else if (mode === "year-asc") {
+      sorted.sort((a, b) => yearValue(a.Year) - yearValue(b.Year));
+    } else if (mode === "vendor-asc") {
+      sorted.sort((a, b) => String(a.Vendor).localeCompare(String(b.Vendor)));
+    } else {
+      sorted.sort((a, b) => b.Amount - a.Amount);
+    }
+
+    return sorted;
+  }
+
+  function groupKey(row, mode) {
+    if (mode === "department") return row.Department || "Unknown Department";
+    if (mode === "reason") return `${row.reasonCode} - ${row.reasonLabel}`;
+    if (mode === "year") return String(row.Year || "Unknown Year");
+    if (mode === "vendor") return row.Vendor || "Unknown Vendor";
+    return "All Records";
+  }
+
+  function renderLedger() {
+    const query = ledgerState.search.trim().toLowerCase();
+    const searched = fullContracts.filter((row) => {
+      if (!query) return true;
+      const blob = [
+        row.Contract_Number,
+        row.Department,
+        row.Vendor,
+        row.Description,
+        row.Reason,
+        row.reasonCode,
+        row.reasonLabel,
+        row.Year,
+      ]
+        .join(" ")
+        .toLowerCase();
+      return blob.includes(query);
+    });
+
+    const sorted = sortRows(searched, ledgerState.sort);
+    const spend = sorted.reduce((sum, row) => sum + row.Amount, 0);
+
+    if (ledgerState.group === "none") {
+      ledgerBody.innerHTML = sorted
+        .map(
+          (row) => `
+            <tr>
+              <td>${escapeHtml(row.Contract_Number)}</td>
+              <td>${escapeHtml(row.Department)}</td>
+              <td>${escapeHtml(row.Vendor)}</td>
+              <td>${escapeHtml(row.reasonCode)} · ${escapeHtml(row.reasonLabel)}</td>
+              <td>${formatCurrency(row.Amount)}</td>
+              <td>${escapeHtml(String(row.Year))}</td>
+              <td>${row.ACAN ? "Yes" : "No"}</td>
+            </tr>
+          `
+        )
+        .join("");
+
+      ledgerSummary.textContent = `${sorted.length.toLocaleString("en-CA")} records · ${formatCurrency(spend)} visible after filters.`;
+      return;
+    }
+
+    const groups = new Map();
+    sorted.forEach((row) => {
+      const key = groupKey(row, ledgerState.group);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(row);
+    });
+
+    const groupRows = [...groups.entries()]
+      .sort((a, b) => b[1].reduce((sum, row) => sum + row.Amount, 0) - a[1].reduce((sum, row) => sum + row.Amount, 0))
+      .map(([key, rows]) => {
+        const groupSpend = rows.reduce((sum, row) => sum + row.Amount, 0);
+        const header = `
+          <tr class="ledger-group-row">
+            <td colspan="7">
+              <strong>${escapeHtml(key)}</strong>
+              <span>${rows.length.toLocaleString("en-CA")} records · ${formatCurrency(groupSpend)}</span>
+            </td>
+          </tr>
+        `;
+
+        const detail = rows
+          .slice(0, 30)
+          .map(
+            (row) => `
+              <tr>
+                <td>${escapeHtml(row.Contract_Number)}</td>
+                <td>${escapeHtml(row.Department)}</td>
+                <td>${escapeHtml(row.Vendor)}</td>
+                <td>${escapeHtml(row.reasonCode)} · ${escapeHtml(row.reasonLabel)}</td>
+                <td>${formatCurrency(row.Amount)}</td>
+                <td>${escapeHtml(String(row.Year))}</td>
+                <td>${row.ACAN ? "Yes" : "No"}</td>
+              </tr>
+            `
+          )
+          .join("");
+
+        const overflow = rows.length > 30
+          ? `<tr class="ledger-overflow"><td colspan="7">Showing top 30 rows in this group. Refine with search for deeper inspection.</td></tr>`
+          : "";
+
+        return `${header}${detail}${overflow}`;
+      })
+      .join("");
+
+    ledgerBody.innerHTML = groupRows;
+    ledgerSummary.textContent = `${sorted.length.toLocaleString("en-CA")} records across ${groups.size.toLocaleString("en-CA")} groups · ${formatCurrency(spend)} visible after filters.`;
+  }
+
+  ledgerSearch.addEventListener("input", (event) => {
+    ledgerState.search = event.target.value || "";
+    renderLedger();
+  });
+
+  ledgerGroup.addEventListener("change", (event) => {
+    ledgerState.group = event.target.value || "none";
+    renderLedger();
+  });
+
+  ledgerSort.addEventListener("change", (event) => {
+    ledgerState.sort = event.target.value || "amount-desc";
+    renderLedger();
+  });
+
+  renderLedger();
 }
 
 function activateView(viewName) {

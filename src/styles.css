@@ -381,7 +381,13 @@ body,
 }
 
 .analytics-shell .lead {
-  max-width: 72ch;
+  max-width: none;
+  width: 100%;
+}
+
+.philosophy-shell .lead {
+  max-width: none;
+  width: 100%;
 }
 
 .kpi-grid {
@@ -430,6 +436,40 @@ body,
   margin-top: 0.35rem;
 }
 
+.story-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 0.65rem;
+}
+
+.story-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 0.75rem;
+}
+
+.story-card span {
+  display: block;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  font-size: 0.62rem;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+}
+
+.story-card strong {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 1.25rem;
+}
+
+.story-card p {
+  margin: 0.35rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
 .insight-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(180px, 1fr));
@@ -440,6 +480,7 @@ body,
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.09);
   padding: 0.7rem;
+  min-height: 172px;
 }
 
 .insight-rank {
@@ -465,6 +506,22 @@ body,
   margin-top: 0.2rem;
   font-size: 0.73rem;
   color: var(--ink-soft);
+}
+
+.capsule-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.45rem;
+}
+
+.capsule {
+  display: inline-block;
+  font-size: 0.67rem;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--ink-soft);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .reason-mosaic {
@@ -501,6 +558,56 @@ body,
 .section-copy {
   margin: -0.4rem 0 0.75rem;
   font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+.reason-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.reason-card {
+  padding: 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+}
+
+.reason-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.reason-card-top h3 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.reason-card-top strong {
+  font-size: 0.88rem;
+}
+
+.reason-card p {
+  margin: 0.35rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.79rem;
+  line-height: 1.35;
+}
+
+.reason-meta {
+  margin-top: 0.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.reason-meta span {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.16rem 0.38rem;
+  font-size: 0.67rem;
   color: var(--ink-soft);
 }
 
@@ -658,6 +765,69 @@ body,
   min-width: 760px;
 }
 
+.ledger-toolbar {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 0.55rem;
+  margin-bottom: 0.55rem;
+}
+
+.ledger-toolbar input,
+.ledger-toolbar select {
+  width: 100%;
+  padding: 0.5rem;
+  background: #10141a;
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font: inherit;
+  font-size: 0.82rem;
+}
+
+.ledger-summary {
+  margin: 0.15rem 0 0.65rem;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+}
+
+.ledger-group-row td {
+  background: rgba(255, 184, 0, 0.1);
+  border-top: 1px solid rgba(255, 184, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 184, 0, 0.3);
+}
+
+.ledger-group-row strong {
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ledger-group-row span {
+  margin-left: 0.65rem;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+}
+
+.ledger-overflow td {
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.credit-card a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.credit-card a:hover {
+  text-decoration: underline;
+}
+
 .philosophy-card {
   margin-top: 1rem;
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
@@ -752,7 +922,14 @@ body,
   }
 
   .insight-grid,
-  .reason-mosaic {
+  .reason-mosaic,
+  .reason-grid,
+  .story-strip,
+  .principles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ledger-toolbar {
     grid-template-columns: 1fr;
   }
 
