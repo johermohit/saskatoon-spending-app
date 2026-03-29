@@ -19,50 +19,35 @@ app.innerHTML = `
       <section class="map-stage">
         <div id="map" aria-label="Saskatoon neighborhood spending map"></div>
 
-        <aside class="map-hero">
-          <p class="eyebrow">City Spending, Made Legible</p>
-          <h1 class="title">Neighborhood Spending Atlas</h1>
-          <p class="lead">
-            Tap a marker to see where money went, who received it, and why a non-standard path was used.
-          </p>
-          <div class="hero-kpis">
-            <p><span>Neighborhoods</span><strong id="stat-neighborhoods">-</strong></p>
-            <p><span>Total Spend</span><strong id="stat-total">-</strong></p>
-          </div>
-          <p class="hero-note">Use map controls to focus by department, theme, or spend range.</p>
-        </aside>
+        <aside class="map-left-stack">
+          <aside class="map-hero">
+            <p class="eyebrow">City Spending, Made Legible</p>
+            <h1 class="title">Neighborhood Spending Atlas</h1>
+            <p class="lead">
+              Tap a marker to see where money went, who received it, and why a non-standard path was used.
+            </p>
+            <div class="hero-kpis">
+              <p><span>Neighborhoods</span><strong id="stat-neighborhoods">-</strong></p>
+              <p><span>Total Spend</span><strong id="stat-total">-</strong></p>
+            </div>
+            <p class="hero-note">High-contrast map mode is locked for optimal accessibility and legibility.</p>
+          </aside>
 
-        <aside class="map-tools" aria-label="Map controls and legend">
-          <section class="control-group compact">
-            <h2>Department</h2>
-            <select id="dept-filter">
-              <option value="">All Departments</option>
-            </select>
-          </section>
+          <aside class="map-tools" aria-label="Map controls">
+            <section class="control-group compact">
+              <h2>Department</h2>
+              <select id="dept-filter">
+                <option value="">All Departments</option>
+              </select>
+            </section>
 
-          <section class="control-group compact">
-            <h2>Map Theme</h2>
-            <select id="map-theme">
-              <option value="civic-night">Civic Night</option>
-              <option value="paper-light">Paper Light</option>
-              <option value="high-contrast">High Contrast</option>
-            </select>
-          </section>
-
-          <section class="control-group compact">
-            <h2>Spend Bands</h2>
-            <label><input type="checkbox" id="filter-small" checked /> $20k-$100k</label>
-            <label><input type="checkbox" id="filter-medium" checked /> $100k-$500k</label>
-            <label><input type="checkbox" id="filter-large" checked /> $500k+</label>
-          </section>
-
-          <section class="control-group compact">
-            <h2>Legend</h2>
-            <div class="legend-row"><span class="swatch low"></span><span>$20k-$100k</span></div>
-            <div class="legend-row"><span class="swatch med"></span><span>$100k-$500k</span></div>
-            <div class="legend-row"><span class="swatch high"></span><span>$500k-$2.5M</span></div>
-            <div class="legend-row"><span class="swatch max"></span><span>$2.5M+</span></div>
-          </section>
+            <section class="control-group compact">
+              <h2>Spend Bands</h2>
+              <label><input type="checkbox" id="filter-small" checked /> $20k-$100k</label>
+              <label><input type="checkbox" id="filter-medium" checked /> $100k-$500k</label>
+              <label><input type="checkbox" id="filter-large" checked /> $500k+</label>
+            </section>
+          </aside>
         </aside>
 
         <aside class="detail-panel" id="detail-panel">
@@ -71,6 +56,13 @@ app.innerHTML = `
             <h2 id="drawer-name">Select a neighborhood</h2>
             <p id="drawer-meta">Open a marker to see contracts, vendors, and reason context.</p>
           </div>
+          <section class="panel-legend">
+            <h3>Legend</h3>
+            <div class="legend-row"><span class="swatch low"></span><span>$20k-$100k</span></div>
+            <div class="legend-row"><span class="swatch med"></span><span>$100k-$500k</span></div>
+            <div class="legend-row"><span class="swatch high"></span><span>$500k-$2.5M</span></div>
+            <div class="legend-row"><span class="swatch max"></span><span>$2.5M+</span></div>
+          </section>
           <div id="drawer-projects" class="project-list"></div>
         </aside>
       </section>
@@ -93,34 +85,36 @@ app.innerHTML = `
         <h1 class="title">Public Spending Should Be Understandable</h1>
         <p class="lead">
           Most people do not read procurement spreadsheets, but everyone lives with the results.
-          This project turns hard-to-read records into a neighborhood story residents can use.
+          This project turns hard-to-read records into a clear civic map anyone can use.
         </p>
+        <blockquote class="philosophy-quote">"Accountability starts when people can actually read the data."</blockquote>
         <article class="philosophy-card">
-          <h2>1. Start With Place</h2>
+          <h2>Principle 1: Start With Place</h2>
           <p>
             We begin with neighborhoods because people think in places they know.
             Clicking a marker should answer one practical question: what happened here?
           </p>
         </article>
         <article class="philosophy-card">
-          <h2>2. Show Receipts, Not Just Totals</h2>
+          <h2>Principle 2: Show Receipts, Not Just Totals</h2>
           <p>
             Every high-level number should lead to vendor, amount, and decision reason.
             That makes this a public ledger people can inspect, question, and trust.
           </p>
         </article>
         <article class="philosophy-card">
-          <h2>3. Explain Why Exceptions Happen</h2>
+          <h2>Principle 3: Explain Exceptions Clearly</h2>
           <p>
             Non-standard procurement is sometimes necessary. What matters is clarity:
             when exceptions are used, where they are concentrated, and how that changes over time.
           </p>
         </article>
         <article class="philosophy-card">
-          <h2>4. Build for Residents First</h2>
+          <h2>Our Manifesto</h2>
           <p>
-            Plain language, readable contrast, and simple controls are not cosmetic.
-            They are accessibility choices so more people can participate in civic oversight.
+            Every resident deserves to see where city money goes. Plain language, strong contrast,
+            and simple controls are not cosmetic choices; they are access choices that invite more
+            people into civic oversight.
           </p>
         </article>
       </section>
@@ -149,32 +143,10 @@ const state = {
   analytics: null,
   analyticsRendered: false,
   reasonCatalog: {},
-  activeTheme: "civic-night",
+  activeTheme: "high-contrast",
 };
 
 const MAP_THEMES = {
-  "civic-night": {
-    raster: {
-      "raster-saturation": -0.7,
-      "raster-contrast": 0.2,
-      "raster-brightness-min": 0.1,
-      "raster-brightness-max": 0.78,
-    },
-    glow: "#f4b112",
-    stops: ["#b8d88c", "#f6be3b", "#f59245", "#ee6b5f"],
-    stroke: "#1f2630",
-  },
-  "paper-light": {
-    raster: {
-      "raster-saturation": -0.25,
-      "raster-contrast": 0.03,
-      "raster-brightness-min": 0.52,
-      "raster-brightness-max": 1,
-    },
-    glow: "#b67f08",
-    stops: ["#7ea06a", "#ce8d15", "#bf5f2a", "#a63e32"],
-    stroke: "#f7f2e7",
-  },
   "high-contrast": {
     raster: {
       "raster-saturation": -1,
@@ -441,7 +413,28 @@ function buildAnalyticsPayload(rawRecords) {
   const acanYes = records.filter((row) => row.acan);
   const acanNo = records.filter((row) => !row.acan);
 
+  const unknownReasonContracts = records.filter((row) => row.reasons.length === 0).length;
+  const unknownReasonSpend = records
+    .filter((row) => row.reasons.length === 0)
+    .reduce((sum, row) => sum + row.amount, 0);
+  const topTwoVendorSpend = topVendors.slice(0, 2).reduce((sum, row) => sum + row.Total_Spend, 0);
+  const topTwoVendorSharePct = totalSpend > 0 ? (topTwoVendorSpend / totalSpend) * 100 : 0;
+  const clerkNameVarianceSpend = byDepartment
+    .filter((dept) => /clerk/i.test(dept.Department))
+    .reduce((sum, dept) => sum + dept.Total_Spend, 0);
+  const namingVariantsCount = byDepartment.filter((dept) => {
+    const name = String(dept.Department || "").toLowerCase();
+    return name.includes("clerk") || name.includes("solicitor") || name.includes("recreation");
+  }).length;
+
   return {
+    signals: {
+      unknownReasonContracts,
+      unknownReasonSpend,
+      topTwoVendorSharePct,
+      clerkNameVarianceSpend,
+      namingVariantsCount,
+    },
     totals: {
       Contracts: records.length,
       Total_Spend: totalSpend,
@@ -576,14 +569,6 @@ function setupFilterHandlers() {
   document.querySelector("#filter-large").addEventListener("change", updateFilters);
 }
 
-function setupThemeHandler() {
-  const select = document.querySelector("#map-theme");
-  select.addEventListener("change", () => {
-    state.activeTheme = select.value;
-    applyMapTheme(select.value);
-  });
-}
-
 function populateDepartmentFilter(rows) {
   const select = document.querySelector("#dept-filter");
   const departments = [...new Set(rows.map((row) => row.Top_Department).filter(Boolean))].sort();
@@ -596,7 +581,7 @@ function populateDepartmentFilter(rows) {
 }
 
 function initializeMap(rows) {
-  const theme = MAP_THEMES[state.activeTheme] || MAP_THEMES["civic-night"];
+  const theme = MAP_THEMES[state.activeTheme] || MAP_THEMES["high-contrast"];
 
   state.map = new maplibregl.Map({
     container: "map",
@@ -705,7 +690,7 @@ function initializeMap(rows) {
 function applyMapTheme(themeKey) {
   if (!state.map) return;
 
-  const theme = MAP_THEMES[themeKey] || MAP_THEMES["civic-night"];
+  const theme = MAP_THEMES[themeKey] || MAP_THEMES["high-contrast"];
 
   if (!state.map.getLayer("osm")) return;
 
@@ -737,6 +722,28 @@ function applyMapTheme(themeKey) {
 
 function renderAnalytics(analytics, reasonCatalog) {
   const root = document.querySelector("#analytics-root");
+  const signals = analytics.signals || {
+    unknownReasonContracts: 0,
+    unknownReasonSpend: 0,
+    topTwoVendorSharePct: analytics.totals.Total_Spend > 0
+      ? ((analytics.topVendors?.slice(0, 2).reduce((sum, row) => sum + (row.Total_Spend || 0), 0) / analytics.totals.Total_Spend) * 100)
+      : 0,
+    clerkNameVarianceSpend: (analytics.byDepartment || [])
+      .filter((dept) => /clerk/i.test(dept.Department))
+      .reduce((sum, dept) => sum + (dept.Total_Spend || 0), 0),
+    namingVariantsCount: (analytics.byDepartment || []).filter((dept) => {
+      const name = String(dept.Department || "").toLowerCase();
+      return name.includes("clerk") || name.includes("solicitor") || name.includes("recreation");
+    }).length,
+  };
+
+  const signalBullets = [
+    `${signals.unknownReasonContracts.toLocaleString("en-CA")} contracts are missing reason-code detail (${formatCurrency(signals.unknownReasonSpend)}).`,
+    `Top two vendors represent ${Number(signals.topTwoVendorSharePct || 0).toFixed(1)}% of total spend.`,
+    `${signals.namingVariantsCount.toLocaleString("en-CA")} department name variants include clerk, solicitor, or recreation wording.`,
+    `${formatCurrency(signals.clerkNameVarianceSpend)} is currently grouped under clerk-related department naming variants.`,
+  ];
+
   const maxDept = Math.max(...analytics.byDepartment.map((item) => item.Total_Spend), 1);
   const maxReason = Math.max(...analytics.byReason.map((item) => item.Total_Spend), 1);
   const yearRowsSource = Array.isArray(analytics.byYear) ? analytics.byYear : [];
@@ -810,6 +817,13 @@ function renderAnalytics(analytics, reasonCatalog) {
       <article class="kpi-card"><span>Vendors</span><strong>${analytics.totals.Unique_Vendors}</strong></article>
     </div>
 
+    <section class="analytics-card">
+      <h2>Read Before Conclusions</h2>
+      <ul class="signal-bullets">
+        ${signalBullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+    </section>
+
     <section class="analytics-card context-grid">
       <article class="context-card">
         <h2>Time Span</h2>
@@ -856,10 +870,12 @@ function renderAnalytics(analytics, reasonCatalog) {
 
     <section class="analytics-card">
       <h2>Top Contracts</h2>
-      <table class="contracts-table">
-        <thead><tr><th>Contract</th><th>Department</th><th>Vendor</th><th>Amount</th><th>Year</th></tr></thead>
-        <tbody>${topContracts}</tbody>
-      </table>
+      <div class="table-scroll">
+        <table class="contracts-table">
+          <thead><tr><th>Contract</th><th>Department</th><th>Vendor</th><th>Amount</th><th>Year</th></tr></thead>
+          <tbody>${topContracts}</tbody>
+        </table>
+      </div>
     </section>
   `;
 }
@@ -893,7 +909,6 @@ async function boot() {
     state.reasonCatalog = buildReasonCatalogFromNeighborhoods(rows);
     populateDepartmentFilter(rows);
     setupFilterHandlers();
-    setupThemeHandler();
     initializeMap(rows);
 
     loadAnalyticsData()
