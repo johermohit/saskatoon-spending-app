@@ -1,8 +1,25 @@
 import maplibregl from "maplibre-gl";
+import posthog from "posthog-js";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./styles.css";
 
 const app = document.querySelector("#app");
+
+function initializeAnalytics() {
+  const key = import.meta.env.VITE_POSTHOG_KEY;
+  if (!key) return;
+
+  posthog.init(key, {
+    api_host: import.meta.env.VITE_POSTHOG_HOST || "https://us.i.posthog.com",
+    capture_pageview: true,
+    capture_pageleave: true,
+  });
+}
+
+function trackEvent(eventName, properties = {}) {
+  if (!posthog.__loaded) return;
+  posthog.capture(eventName, properties);
+}
 
 app.innerHTML = `
   <main class="app-shell">
@@ -579,6 +596,18 @@ function setupFilterHandlers() {
 
     state.map.setFilter("spending-glow", filter);
     state.map.setFilter("spending-points", filter);
+
+    const activeBands = [
+      small ? "small" : null,
+      medium ? "medium" : null,
+      large ? "large" : null,
+    ].filter(Boolean);
+
+    trackEvent("map_filters_changed", {
+      department: dept || "all",
+      active_bands: activeBands,
+      active_band_count: activeBands.length,
+    });
   }
 
   document.querySelector("#dept-filter").addEventListener("change", updateFilters);
@@ -693,6 +722,13 @@ function initializeMap(rows) {
           </div>
         `)
         .addTo(state.map);
+
+      trackEvent("neighborhood_selected", {
+        neighborhood,
+        contracts: Number(contracts),
+        total_spend: Number(spend),
+        top_department: topDept || "Unknown",
+      });
     });
 
     state.map.on("mouseenter", "spending-points", () => {
@@ -1196,6 +1232,8 @@ function activateView(viewName) {
       state.analyticsRendered = true;
     }
   }
+
+  trackEvent("view_changed", { view: viewName });
 }
 
 async function boot() {
@@ -1235,4 +1273,5 @@ document.querySelectorAll(".nav-btn").forEach((button) => {
   button.addEventListener("click", () => activateView(button.dataset.view));
 });
 
+initializeAnalytics();
 boot();
