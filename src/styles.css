@@ -438,7 +438,7 @@ body,
 
 .story-strip {
   display: grid;
-  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 0.65rem;
 }
 
@@ -1065,5 +1065,69 @@ body,
     padding: 0.7rem;
     z-index: auto;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* ── Analytics view on phone ──────────────────────────────────────────── */
+
+  /* Tighten the outer shell padding on small screens */
+  .analytics-shell,
+  .philosophy-shell {
+    padding: 0.9rem 0.8rem;
+  }
+
+  /* Reduce the title size so it doesn't overflow */
+  .analytics-shell .title {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+  }
+
+  /* Hide the long lead paragraph on very small screens to reduce scroll */
+  .analytics-shell .lead {
+    display: none;
+  }
+
+  /* KPI grid: keep 2×2 on phones (already set at 860px but be explicit) */
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Reduce card padding to maximise content area */
+  .analytics-card {
+    padding: 0.7rem;
+  }
+
+  /* Story cards: single column on phones */
+  .story-strip {
+    grid-template-columns: 1fr;
+  }
+
+  /* Department and reason grids: single column on phones */
+  .insight-grid,
+  .reason-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Remove the fixed min-height on insight cards on phone */
+  .insight-card {
+    min-height: unset;
+  }
+
+  /* Year rows: 3-col compact layout on phones */
+  .year-row {
+    grid-template-columns: 46px 1fr auto;
+  }
+
+  .year-contracts {
+    grid-column: 2 / 4;
+    text-align: left;
+  }
+
+  /* Ledger toolbar: stack inputs on phone */
+  .ledger-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  /* Context grid: single column on phones */
+  .context-grid {
+    grid-template-columns: 1fr;
   }
 }

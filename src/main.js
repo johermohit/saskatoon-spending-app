@@ -800,15 +800,19 @@ function renderAnalytics(analytics, reasonCatalog) {
       value: `${Number(signals.topTwoVendorSharePct || 0).toFixed(1)}%`,
       note: "of total spend is concentrated in the top two vendors.",
     },
-    {
-      title: "Data Gaps",
-      value: `${signals.unknownReasonContracts.toLocaleString("en-CA")} rows`,
-      note: `have missing reason detail (${formatCurrency(signals.unknownReasonSpend)}).`,
-    },
+    ...(signals.unknownReasonContracts > 0
+      ? [
+          {
+            title: "Data Gaps",
+            value: `${signals.unknownReasonContracts.toLocaleString("en-CA")} rows`,
+            note: `have missing reason detail (${formatCurrency(signals.unknownReasonSpend)}).`,
+          },
+        ]
+      : []),
     {
       title: "Naming Drift",
       value: `${signals.namingVariantsCount.toLocaleString("en-CA")} variants`,
-      note: "department labels include clerk/solicitor/recreation variations.",
+      note: "found across department name spellings in the ledger.",
     },
   ];
 
@@ -913,7 +917,7 @@ function renderAnalytics(analytics, reasonCatalog) {
     </div>
 
     <section class="analytics-card">
-      <h2>Signal Snapshot</h2>
+      <h2>Key Indicators</h2>
       <div class="story-strip">
         ${storyCards
           .map(
@@ -930,7 +934,7 @@ function renderAnalytics(analytics, reasonCatalog) {
     </section>
 
     <section class="analytics-card">
-      <h2>Field Notes from ${analytics.totals.Contracts.toLocaleString("en-CA")} Records</h2>
+      <h2>Dataset Summary — ${analytics.totals.Contracts.toLocaleString("en-CA")} Contracts</h2>
       <ul class="signal-bullets">
         ${fieldNotes.map((item) => `<li>${item}</li>`).join("")}
       </ul>
@@ -967,8 +971,8 @@ function renderAnalytics(analytics, reasonCatalog) {
     </section>
 
     <section class="analytics-card">
-      <h2>Exception Pressure Map</h2>
-      <p class="section-copy">What each reason code means, how much money flows through it, and which department drives it most.</p>
+      <h2>Procurement Exception Reasons</h2>
+      <p class="section-copy">What each reason code means, how much money flows through it, and which department uses it most.</p>
       <div class="reason-grid">${reasonRows}</div>
     </section>
 
