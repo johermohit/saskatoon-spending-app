@@ -994,3 +994,76 @@ body,
     max-height: 210px;
   }
 }
+
+/* ── Mobile stacked layout ──────────────────────────────────────────────────
+   On small phones the absolute-positioned overlays cover the entire map.
+   Switch to a vertical flow: fixed-height map on top, controls below.
+   ────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  /* Turn the stage into a flex column so panels stack under the map */
+  .map-stage {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  /* Give the map canvas a fixed height — roughly half the screen —
+     so the map is always visible and panels can scroll below it */
+  #map {
+    position: relative;
+    inset: auto;
+    height: 52vh;
+    min-height: 260px;
+    flex-shrink: 0;
+  }
+
+  /* Left stack flows below the map as normal document content */
+  .map-left-stack {
+    position: static;
+    width: 100%;
+    left: auto;
+    right: auto;
+    top: auto;
+    padding: 0.7rem;
+    z-index: auto;
+  }
+
+  /* Compact the hero: hide the verbose lead paragraph */
+  .map-hero .lead {
+    display: none;
+  }
+
+  .map-hero {
+    padding: 0.65rem;
+  }
+
+  .map-hero .title {
+    font-size: 1.25rem;
+  }
+
+  .hero-kpis {
+    margin-top: 0.5rem;
+  }
+
+  /* Tools: let them expand naturally — no fixed max-height needed now */
+  .map-tools {
+    max-height: none;
+  }
+
+  /* Detail panel flows below the controls as normal document content.
+     Cap at half the viewport so users do not have to scroll too far. */
+  .detail-panel {
+    position: static;
+    width: 100%;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    height: auto;
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 0.7rem;
+    z-index: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
